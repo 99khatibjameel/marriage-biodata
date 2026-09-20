@@ -1,6 +1,7 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
+import HinduBiodataPreview from "../../../components/biodata/HinduBiodataPreview";
 
 type FormData = {
   fullName: string;
@@ -13,6 +14,49 @@ type FormData = {
   motherTongue: string;
   currentCity: string;
   aboutMe: string;
+
+  // Step 2 - Education & Career
+highestQualification: string;
+degreeCourse: string;
+collegeUniversity: string;  
+occupation: string;
+companyBusiness: string;
+designation: string;
+workLocation: string;
+annualIncome: string;
+careerDetails: string;
+
+// Step 3 - Family Details
+fatherName: string;
+fatherOccupation: string;
+motherName: string;
+motherOccupation: string;
+brothers: string;
+sisters: string;
+familyType: string;
+familyLocation: string;
+familyDetails: string;
+
+// Step 4 - Hindu / Traditional Details
+religion: string;
+community: string;
+subCommunity: string;
+gotra: string;
+rashi: string;
+nakshatra: string;
+manglik: string;
+horoscopeAvailable: string;
+traditionalDetails: string;
+
+// Step 5 - Contact Details
+contactPerson: string;
+mobileNumber: string;
+alternateNumber: string;
+email: string;
+address: string;
+contactCity: string;
+contactState: string;
+
 };
 
 type SymbolItem = {
@@ -161,11 +205,34 @@ const symbols: SymbolItem[] = [
   image: "/symbols/hindu/ganesh/ganesh-04.png",
 },
 
-  { id: "s1", name: "Shiva Trishul", category: "Shiva", type: "image" },
-  { id: "s2", name: "Shivling", category: "Shiva", type: "image" },
-  { id: "s3", name: "Trishul & Damru", category: "Shiva", type: "image" },
-  { id: "s4", name: "Mahadev", category: "Shiva", type: "image" },
-  { id: "s5", name: "Shiva Minimal", category: "Shiva", type: "image" },
+{
+  id: "s1",
+  name: "Mahadev",
+  category: "Shiva",
+  type: "image",
+  image: "/symbols/hindu/shiva/shiva-1.png",
+},
+{
+  id: "s2",
+  name: "Shiva Meditation",
+  category: "Shiva",
+  type: "image",
+  image: "/symbols/hindu/shiva/shiva-2.png",
+},
+{
+  id: "s3",
+  name: "Shiva Traditional",
+  category: "Shiva",
+  type: "image",
+  image: "/symbols/hindu/shiva/shiva-3.png",
+},
+{
+  id: "s4",
+  name: "Mahadev Blessing",
+  category: "Shiva",
+  type: "image",
+  image: "/symbols/hindu/shiva/shiva-4.png",
+},
 
   { id: "k1", name: "Krishna Flute", category: "Krishna", type: "image" },
   { id: "k2", name: "Radha Krishna", category: "Krishna", type: "image" },
@@ -218,12 +285,105 @@ export default function HinduBiodataPage() {
     motherTongue: "",
     currentCity: "",
     aboutMe: "",
+
+    // Step 2 - Education & Career
+highestQualification: "",
+degreeCourse: "",
+collegeUniversity: "",
+occupation: "",
+companyBusiness: "",
+designation: "",
+workLocation: "",
+annualIncome: "",
+careerDetails: "",
+
+// Step 3 - Family Details
+fatherName: "",
+fatherOccupation: "",
+motherName: "",
+motherOccupation: "",
+brothers: "",
+sisters: "",
+familyType: "",
+familyLocation: "",
+familyDetails: "",
+
+// Step 4 - Hindu / Traditional Details
+religion: "Hindu",
+community: "",
+subCommunity: "",
+gotra: "",
+rashi: "",
+nakshatra: "",
+manglik: "",
+horoscopeAvailable: "",
+traditionalDetails: "",
+
+// Step 5 - Contact Details
+contactPerson: "",
+mobileNumber: "",
+alternateNumber: "",
+email: "",
+address: "",
+contactCity: "",
+contactState: "",
   });
 
   const [selectedSymbolId, setSelectedSymbolId] = useState("none");
   const [symbolPickerOpen, setSymbolPickerOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("Popular");
   const [photo, setPhoto] = useState<string | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+
+  // Load saved biodata when the page opens
+// Load saved biodata when the page opens
+useEffect(() => {
+  try {
+    const savedDraft = localStorage.getItem("hinduBiodataDraft");
+
+    if (savedDraft) {
+      const draft = JSON.parse(savedDraft);
+
+      if (draft.formData) {
+        setFormData((current) => ({
+          ...current,
+          ...draft.formData,
+        }));
+      }
+
+      if (draft.selectedSymbolId) {
+        setSelectedSymbolId(draft.selectedSymbolId);
+      }
+
+      if (draft.currentStep) {
+        setCurrentStep(draft.currentStep);
+      }
+    }
+  } catch (error) {
+    console.error("Could not load biodata draft:", error);
+  }
+
+  setIsLoaded(true);
+}, []);
+
+// Automatically save biodata when details change
+useEffect(() => {
+  if (!isLoaded) return;
+
+  try {
+    localStorage.setItem(
+      "hinduBiodataDraft",
+    JSON.stringify({
+  formData,
+  selectedSymbolId,
+  currentStep,
+})
+    );
+  } catch (error) {
+    console.error("Could not save biodata draft:", error);
+  }
+}, [formData, selectedSymbolId, currentStep, isLoaded]);
 
   const selectedSymbol =
     symbols.find((item) => item.id === selectedSymbolId) || symbols[0];
@@ -300,22 +460,58 @@ export default function HinduBiodataPage() {
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-5">
         <div className="mb-8 overflow-x-auto pb-2">
           <div className="flex min-w-[720px] items-center">
-            <ProgressStep number="1" title="Personal" active />
-            <ProgressLine />
-            <ProgressStep number="2" title="Education" />
-            <ProgressLine />
-            <ProgressStep number="3" title="Family" />
-            <ProgressLine />
-            <ProgressStep number="4" title="Traditional" />
-            <ProgressLine />
-            <ProgressStep number="5" title="Contact" />
-            <ProgressLine />
-            <ProgressStep number="6" title="Design" />
+           <ProgressStep
+  number="1"
+  title="Personal"
+  active={currentStep === 1}
+/>
+
+<ProgressLine />
+
+<ProgressStep
+  number="2"
+  title="Education"
+  active={currentStep === 2}
+/>
+
+<ProgressLine />
+
+<ProgressStep
+  number="3"
+  title="Family"
+  active={currentStep === 3}
+/>
+
+<ProgressLine />
+
+<ProgressStep
+  number="4"
+  title="Traditional"
+  active={currentStep === 4}
+/>
+
+<ProgressLine />
+
+<ProgressStep
+  number="5"
+  title="Contact"
+  active={currentStep === 5}
+/>
+
+<ProgressLine />
+
+<ProgressStep
+  number="6"
+  title="Design"
+  active={currentStep === 6}
+/>
           </div>
         </div>
 
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_400px]">
           <div className="space-y-6">
+            {currentStep === 1 && (
+               <>
             <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
               <p className="text-sm font-bold text-orange-600">STEP 1 OF 6</p>
 
@@ -513,24 +709,591 @@ export default function HinduBiodataPage() {
                     >
                       Remove
                     </button>
-                  )}
+                    )}
                 </div>
               </div>
             </section>
+            
 
             <div className="flex justify-end">
               <button
                 type="button"
+                onClick={() => setCurrentStep(2)}
                 disabled={!formData.fullName.trim()}
                 className="rounded-xl bg-orange-500 px-7 py-3.5 font-bold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:bg-slate-300"
               >
                 Save & Continue →
               </button>
             </div>
+            </>
+)}
+
+{currentStep === 2 && (
+  <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+    <p className="text-sm font-bold text-orange-600">
+      STEP 2 OF 6
+    </p>
+
+    <h2 className="mt-1 text-2xl font-bold text-slate-900">
+      Education & Career
+    </h2>
+
+    <p className="mt-2 text-sm leading-6 text-slate-500">
+      All fields are optional. Add only the education and career details
+      you want to show on your biodata.
+    </p>
+
+   <div className="mt-7">
+   <div className="mt-7 grid gap-5 sm:grid-cols-2">
+  <Field
+    label="Highest Qualification"
+    name="highestQualification"
+    value={formData.highestQualification}
+    onChange={updateField}
+    placeholder="Example: B.Tech, MBA, B.Com"
+  />
+
+  <Field
+    label="Degree / Course"
+    name="degreeCourse"
+    value={formData.degreeCourse}
+    onChange={updateField}
+    placeholder="Example: Computer Science"
+  />
+
+  <Field
+    label="College / University"
+    name="collegeUniversity"
+    value={formData.collegeUniversity}
+    onChange={updateField}
+    placeholder="College / University name"
+  />
+
+  <Field
+    label="Occupation"
+    name="occupation"
+    value={formData.occupation}
+    onChange={updateField}
+    placeholder="Example: Software Engineer"
+  />
+
+  <Field
+    label="Company / Business"
+    name="companyBusiness"
+    value={formData.companyBusiness}
+    onChange={updateField}
+    placeholder="Company or business name"
+  />
+
+  <Field
+    label="Designation"
+    name="designation"
+    value={formData.designation}
+    onChange={updateField}
+    placeholder="Example: Senior Developer"
+  />
+
+  <Field
+    label="Work Location"
+    name="workLocation"
+    value={formData.workLocation}
+    onChange={updateField}
+    placeholder="Example: Pune, Maharashtra"
+  />
+
+  <Field
+    label="Annual Income"
+    name="annualIncome"
+    value={formData.annualIncome}
+    onChange={updateField}
+    placeholder="Example: ₹8–10 LPA"
+  />
+
+  <div className="sm:col-span-2">
+    <label className="mb-2 block text-sm font-semibold text-slate-800">
+      Additional Education / Career Details
+    </label>
+
+    <textarea
+      name="careerDetails"
+      value={formData.careerDetails}
+      onChange={updateField}
+      rows={4}
+      placeholder="Add any additional education or career information..."
+      className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+    />
+  </div>
+</div>
+</div>
+
+    <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-6">
+      <button
+        type="button"
+        onClick={() => setCurrentStep(1)}
+        className="rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
+      >
+        ← Back
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setCurrentStep(3)}
+        className="rounded-xl bg-orange-500 px-7 py-3.5 font-bold text-white transition hover:bg-orange-600"
+      >
+        Save & Continue →
+      </button>
+    </div>
+  </section>
+)}
+
+{currentStep === 3 && (
+  <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+    <p className="text-sm font-bold text-orange-600">
+      STEP 3 OF 6
+    </p>
+
+    <h2 className="mt-1 text-2xl font-bold text-slate-900">
+      Family Details
+    </h2>
+
+    <p className="mt-2 text-sm leading-6 text-slate-500">
+      All family details are optional. Add only the information you want to
+      show on your biodata.
+    </p>
+
+    <div className="mt-7 grid gap-5 sm:grid-cols-2">
+      <Field
+        label="Father's Name"
+        name="fatherName"
+        value={formData.fatherName}
+        onChange={updateField}
+        placeholder="Enter father's name"
+      />
+
+      <Field
+        label="Father's Occupation"
+        name="fatherOccupation"
+        value={formData.fatherOccupation}
+        onChange={updateField}
+        placeholder="Example: Business, Service"
+      />
+
+      <Field
+        label="Mother's Name"
+        name="motherName"
+        value={formData.motherName}
+        onChange={updateField}
+        placeholder="Enter mother's name"
+      />
+
+      <Field
+        label="Mother's Occupation"
+        name="motherOccupation"
+        value={formData.motherOccupation}
+        onChange={updateField}
+        placeholder="Example: Homemaker, Teacher"
+      />
+
+      <Field
+        label="Brothers"
+        name="brothers"
+        value={formData.brothers}
+        onChange={updateField}
+        placeholder="Example: 1"
+      />
+
+      <Field
+        label="Sisters"
+        name="sisters"
+        value={formData.sisters}
+        onChange={updateField}
+        placeholder="Example: 1"
+      />
+
+      <SelectField
+        label="Family Type"
+        name="familyType"
+        value={formData.familyType}
+        onChange={updateField}
+        options={["Nuclear Family", "Joint Family"]}
+      />
+
+      <Field
+        label="Family Location"
+        name="familyLocation"
+        value={formData.familyLocation}
+        onChange={updateField}
+        placeholder="Example: Pune, Maharashtra"
+      />
+
+      <div className="sm:col-span-2">
+        <label className="mb-2 block text-sm font-semibold text-slate-800">
+          Additional Family Details
+        </label>
+
+        <textarea
+          name="familyDetails"
+          value={formData.familyDetails}
+          onChange={updateField}
+          rows={4}
+          placeholder="Add any other family information you want to include..."
+          className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+        />
+      </div>
+    </div>
+
+    <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-6">
+      <button
+        type="button"
+        onClick={() => setCurrentStep(2)}
+        className="rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
+      >
+        ← Back
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setCurrentStep(4)}
+        className="rounded-xl bg-orange-500 px-7 py-3.5 font-bold text-white transition hover:bg-orange-600"
+      >
+        Save & Continue →
+      </button>
+    </div>
+  </section>
+)}
+
+{currentStep === 4 && (
+  <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+    <p className="text-sm font-bold text-orange-600">
+      STEP 4 OF 6
+    </p>
+
+    <h2 className="mt-1 text-2xl font-bold text-slate-900">
+      Hindu / Traditional Details
+    </h2>
+
+    <p className="mt-2 text-sm leading-6 text-slate-500">
+      All traditional details are optional. Add only the information you want
+      to show on your biodata.
+    </p>
+
+    <div className="mt-7 grid gap-5 sm:grid-cols-2">
+      <Field
+        label="Community / Caste"
+        name="community"
+        value={formData.community}
+        onChange={updateField}
+        placeholder="Enter community or caste"
+      />
+
+      <Field
+        label="Sub-Community"
+        name="subCommunity"
+        value={formData.subCommunity}
+        onChange={updateField}
+        placeholder="Enter sub-community if applicable"
+      />
+
+      <Field
+        label="Gotra"
+        name="gotra"
+        value={formData.gotra}
+        onChange={updateField}
+        placeholder="Enter Gotra"
+      />
+
+      <Field
+        label="Rashi"
+        name="rashi"
+        value={formData.rashi}
+        onChange={updateField}
+        placeholder="Example: Mesh / Aries"
+      />
+
+      <Field
+        label="Nakshatra"
+        name="nakshatra"
+        value={formData.nakshatra}
+        onChange={updateField}
+        placeholder="Enter Nakshatra"
+      />
+
+      <SelectField
+        label="Manglik"
+        name="manglik"
+        value={formData.manglik}
+        onChange={updateField}
+        options={["Yes", "No", "Anshik Manglik", "Don't Know"]}
+      />
+
+      <SelectField
+        label="Horoscope Available"
+        name="horoscopeAvailable"
+        value={formData.horoscopeAvailable}
+        onChange={updateField}
+        options={["Yes", "No"]}
+      />
+
+      <div className="hidden sm:block" />
+
+      <div className="sm:col-span-2">
+        <label className="mb-2 block text-sm font-semibold text-slate-800">
+          Additional Traditional Details
+        </label>
+
+        <textarea
+          name="traditionalDetails"
+          value={formData.traditionalDetails}
+          onChange={updateField}
+          rows={4}
+          placeholder="Add any other traditional, horoscope or family details you want to include..."
+          className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+        />
+      </div>
+    </div>
+
+    <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-6">
+      <button
+        type="button"
+        onClick={() => setCurrentStep(3)}
+        className="rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
+      >
+        ← Back
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setCurrentStep(5)}
+        className="rounded-xl bg-orange-500 px-7 py-3.5 font-bold text-white transition hover:bg-orange-600"
+      >
+        Save & Continue →
+      </button>
+    </div>
+  </section>
+)}
+
+{currentStep === 5 && (
+  <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+    <p className="text-sm font-bold text-orange-600">
+      STEP 5 OF 6
+    </p>
+
+    <h2 className="mt-1 text-2xl font-bold text-slate-900">
+      Contact Details
+    </h2>
+
+    <p className="mt-2 text-sm leading-6 text-slate-500">
+      All contact details are optional. Add only the information you want to
+      show on your biodata.
+    </p>
+
+    <div className="mt-7 grid gap-5 sm:grid-cols-2">
+      <Field
+        label="Contact Person"
+        name="contactPerson"
+        value={formData.contactPerson}
+        onChange={updateField}
+        placeholder="Example: Father, Brother or Self"
+      />
+
+      <Field
+        label="Mobile Number"
+        name="mobileNumber"
+        value={formData.mobileNumber}
+        onChange={updateField}
+        placeholder="Enter mobile number"
+      />
+
+      <Field
+        label="Alternate Number"
+        name="alternateNumber"
+        value={formData.alternateNumber}
+        onChange={updateField}
+        placeholder="Enter alternate number"
+      />
+
+      <Field
+        label="Email Address"
+        name="email"
+        value={formData.email}
+        onChange={updateField}
+        placeholder="example@email.com"
+      />
+
+      <Field
+        label="City"
+        name="contactCity"
+        value={formData.contactCity}
+        onChange={updateField}
+        placeholder="Example: Pune"
+      />
+
+      <Field
+        label="State"
+        name="contactState"
+        value={formData.contactState}
+        onChange={updateField}
+        placeholder="Example: Maharashtra"
+      />
+
+      <div className="sm:col-span-2">
+        <label className="mb-2 block text-sm font-semibold text-slate-800">
+          Full Address
+        </label>
+
+        <textarea
+          name="address"
+          value={formData.address}
+          onChange={updateField}
+          rows={4}
+          placeholder="Enter address you want to show on the biodata..."
+          className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+        />
+      </div>
+    </div>
+
+    <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-6">
+      <button
+        type="button"
+        onClick={() => setCurrentStep(4)}
+        className="rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
+      >
+        ← Back
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setCurrentStep(6)}
+        className="rounded-xl bg-orange-500 px-7 py-3.5 font-bold text-white transition hover:bg-orange-600"
+      >
+        Choose Design →
+      </button>
+    </div>
+  </section>
+)}
+{currentStep === 6 && (
+  <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+    <p className="text-sm font-bold text-orange-600">
+      STEP 6 OF 6
+    </p>
+
+    <h2 className="mt-1 text-2xl font-bold text-slate-900">
+      Design Your Biodata
+    </h2>
+
+    <p className="mt-2 text-sm leading-6 text-slate-500">
+      Your details are ready. Now choose a design and preview your complete
+      marriage biodata.
+    </p>
+
+    <div className="mt-7 rounded-2xl border border-orange-100 bg-orange-50 p-5">
+      <p className="font-bold text-slate-900">
+        🎉 Your biodata details are ready!
+      </p>
+
+      <p className="mt-1 text-sm leading-6 text-slate-600">
+        Choose your favourite template below. All templates and downloads are
+        completely free.
+      </p>
+    </div>
+
+    <div className="mt-8">
+      <h3 className="text-lg font-bold text-slate-900">
+        Choose a Template
+      </h3>
+
+      <p className="mt-1 text-sm text-slate-500">
+        More free designs will be added over time.
+      </p>
+
+      <div className="mt-5 grid gap-4 sm:grid-cols-2">
+        <button
+          type="button"
+          className="rounded-2xl border-2 border-orange-500 bg-orange-50 p-4 text-left"
+        >
+          <div className="flex h-44 items-center justify-center rounded-xl border border-orange-100 bg-white">
+            <div className="text-center">
+              <div className="text-3xl">ॐ</div>
+              <p className="mt-3 font-bold text-slate-900">
+                {formData.fullName || "Your Name"}
+              </p>
+              <p className="mt-1 text-xs text-slate-400">
+                Marriage Biodata
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 flex items-center justify-between">
+            <div>
+              <p className="font-bold text-slate-900">
+                Classic Orange
+              </p>
+              <p className="text-xs text-slate-500">
+                Simple & traditional
+              </p>
+            </div>
+
+            <span className="rounded-full bg-orange-500 px-3 py-1 text-xs font-bold text-white">
+              Selected
+            </span>
+          </div>
+        </button>
+
+        <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-4">
+          <div className="flex h-44 items-center justify-center rounded-xl bg-white">
+            <div className="text-center">
+              <p className="text-3xl">✨</p>
+              <p className="mt-2 text-sm font-semibold text-slate-600">
+                More Designs
+              </p>
+              <p className="mt-1 text-xs text-slate-400">
+                Coming soon
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div className="mt-10 border-t border-slate-200 pt-8">
+  <h3 className="text-xl font-bold text-slate-900">
+    Biodata Preview
+  </h3>
+
+  <p className="mt-1 mb-5 text-sm text-slate-500">
+    This is how your marriage biodata will look.
+  </p>
+
+  <HinduBiodataPreview
+    fullName={formData.fullName}
+    photo={photo}
+    formData={formData}
+  />
+</div>
+    <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-6">
+      <button
+        type="button"
+        onClick={() => setCurrentStep(5)}
+        className="rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
+      >
+        ← Back
+      </button>
+
+      <button
+        type="button"
+        className="rounded-xl bg-orange-500 px-7 py-3.5 font-bold text-white transition hover:bg-orange-600"
+      >
+        Preview Biodata →
+      </button>
+    </div>
+  </section>
+)}
+
           </div>
 
           {/* LIVE PREVIEW */}
-          <aside>
+          {currentStep !== 6 && (
+  <aside className="hidden lg:block">
             <div className="sticky top-28">
               <div className="mb-3 flex items-center justify-between">
                 <h2 className="font-bold text-slate-900">Live Preview</h2>
@@ -605,10 +1368,97 @@ export default function HinduBiodataPage() {
                       </p>
                     </div>
                   )}
+                  {/* Education & Career */}
+{(formData.highestQualification ||
+  formData.degreeCourse ||
+  formData.collegeUniversity ||
+  formData.occupation ||
+  formData.companyBusiness ||
+  formData.designation ||
+  formData.workLocation ||
+  formData.annualIncome ||
+  formData.careerDetails) && (
+  <div className="border-t border-slate-100 pt-4">
+    <p className="mb-3 font-bold text-orange-600">
+      Education & Career
+    </p>
+
+    <div className="space-y-3">
+      {formData.highestQualification && (
+        <PreviewRow
+          label="Qualification"
+          value={formData.highestQualification}
+        />
+      )}
+
+      {formData.degreeCourse && (
+        <PreviewRow
+          label="Degree / Course"
+          value={formData.degreeCourse}
+        />
+      )}
+
+      {formData.collegeUniversity && (
+        <PreviewRow
+          label="College / University"
+          value={formData.collegeUniversity}
+        />
+      )}
+
+      {formData.occupation && (
+        <PreviewRow
+          label="Occupation"
+          value={formData.occupation}
+        />
+      )}
+
+      {formData.companyBusiness && (
+        <PreviewRow
+          label="Company / Business"
+          value={formData.companyBusiness}
+        />
+      )}
+
+      {formData.designation && (
+        <PreviewRow
+          label="Designation"
+          value={formData.designation}
+        />
+      )}
+
+      {formData.workLocation && (
+        <PreviewRow
+          label="Work Location"
+          value={formData.workLocation}
+        />
+      )}
+
+      {formData.annualIncome && (
+        <PreviewRow
+          label="Annual Income"
+          value={formData.annualIncome}
+        />
+      )}
+
+      {formData.careerDetails && (
+        <div className="pt-1">
+          <p className="mb-1 font-semibold text-orange-600">
+            Career Details
+          </p>
+          <p className="break-words text-slate-700">
+            {formData.careerDetails}
+          </p>
+        </div>
+      )}
+    </div>
+  </div>
+)}
                 </div>
               </div>
             </div>
-          </aside>
+           
+         </aside>
+         )}
         </div>
       </div>
 
