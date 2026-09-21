@@ -3,6 +3,140 @@
 import { useEffect, useState, type ChangeEvent } from "react";
 import HinduBiodataPreview from "../../../components/biodata/HinduBiodataPreview";
 
+const translations = {
+  en: {
+    language: "Biodata Language",
+    english: "English",
+    marathi: "मराठी",
+    hindi: "हिंदी",
+    gujarati: "ગુજરાતી",
+
+    personalDetails: "Personal Details",
+    step1Description:
+      "Only your name is required. Leave any other field blank if you do not want it on your biodata.",
+    fullName: "Full Name",
+    fullNamePlaceholder: "Enter your full name",
+    biodataSymbol: "Biodata Symbol",
+    dateOfBirth: "Date of Birth",
+    timeOfBirth: "Time of Birth",
+    placeOfBirth: "Place of Birth",
+    placeOfBirthPlaceholder: "City / Village",
+    gender: "Gender",
+    male: "Male",
+female: "Female",
+other: "Other",
+    heightPlaceholder: "Example: 5' 8\"",
+    maritalStatus: "Marital Status",
+    neverMarried: "Never Married",
+divorced: "Divorced",
+widowed: "Widowed",
+separated: "Separated",
+    motherTongue: "Mother Tongue",
+    currentCity: "Current City",
+    aboutMe: "About Me",
+    selectOptional: "Select if you want",
+  },
+
+  mr: {
+    language: "बायोडाटा भाषा",
+    english: "English",
+    marathi: "मराठी",
+    hindi: "हिंदी",
+    gujarati: "ગુજરાતી",
+
+    personalDetails: "वैयक्तिक माहिती",
+    step1Description:
+      "फक्त तुमचे नाव आवश्यक आहे. बायोडाटामध्ये नको असलेली माहिती रिकामी ठेवू शकता.",
+    fullName: "पूर्ण नाव",
+    fullNamePlaceholder: "तुमचे पूर्ण नाव लिहा",
+    biodataSymbol: "बायोडाटा चिन्ह",
+    dateOfBirth: "जन्म तारीख",
+    timeOfBirth: "जन्म वेळ",
+    placeOfBirth: "जन्मस्थळ",
+    placeOfBirthPlaceholder: "शहर / गाव",
+    gender: "लिंग",
+    male: "पुरुष",
+female: "स्त्री",
+other: "इतर",
+    height: "उंची",
+    heightPlaceholder: "उदाहरण: 5' 8\"",
+    maritalStatus: "वैवाहिक स्थिती",
+    neverMarried: "अविवाहित",
+divorced: "घटस्फोटित",
+widowed: "विधवा / विधुर",
+separated: "विभक्त",
+    motherTongue: "मातृभाषा",
+    currentCity: "सध्याचे शहर",
+    aboutMe: "माझ्याबद्दल",
+    selectOptional: "हवे असल्यास निवडा",
+  },
+
+  hi: {
+    language: "बायोडाटा भाषा",
+    english: "English",
+    marathi: "मराठी",
+    hindi: "हिंदी",
+    gujarati: "ગુજરાતી",
+
+    personalDetails: "व्यक्तिगत जानकारी",
+    step1Description:
+      "केवल आपका नाम आवश्यक है। जो जानकारी बायोडाटा में नहीं चाहिए उसे खाली छोड़ सकते हैं।",
+    fullName: "पूरा नाम",
+    fullNamePlaceholder: "अपना पूरा नाम लिखें",
+    biodataSymbol: "बायोडाटा चिन्ह",
+    dateOfBirth: "जन्म तिथि",
+    timeOfBirth: "जन्म समय",
+    placeOfBirth: "जन्म स्थान",
+    placeOfBirthPlaceholder: "शहर / गाँव",
+    gender: "लिंग",
+    male: "पुरुष",
+female: "महिला",
+other: "अन्य",
+    height: "ऊंचाई",
+    heightPlaceholder: "उदाहरण: 5' 8\"",
+    maritalStatus: "वैवाहिक स्थिति",
+    neverMarried: "अविवाहित",
+divorced: "तलाकशुदा",
+widowed: "विधवा / विधुर",
+separated: "अलग रह रहे",
+    motherTongue: "मातृभाषा",
+    currentCity: "वर्तमान शहर",
+    aboutMe: "मेरे बारे में",
+    selectOptional: "यदि चाहें तो चुनें",
+  },
+
+  gu: {
+    language: "બાયોડેટાની ભાષા",
+    english: "English",
+    marathi: "मराठी",
+    hindi: "हिंदी",
+    gujarati: "ગુજરાતી",
+
+    personalDetails: "વ્યક્તિગત માહિતી",
+    step1Description:
+      "ફક્ત તમારું નામ જરૂરી છે. બાયોડેટામાં ન જોઈતી માહિતી ખાલી રાખી શકો છો.",
+    fullName: "પૂરું નામ",
+    fullNamePlaceholder: "તમારું પૂરું નામ લખો",
+    biodataSymbol: "બાયોડેટા ચિહ્ન",
+    dateOfBirth: "જન્મ તારીખ",
+    timeOfBirth: "જન્મ સમય",
+    placeOfBirth: "જન્મ સ્થળ",
+    placeOfBirthPlaceholder: "શહેર / ગામ",
+    gender: "લિંગ",
+    height: "ઊંચાઈ",
+    heightPlaceholder: "ઉદાહરણ: 5' 8\"",
+    maritalStatus: "વૈવાહિક સ્થિતિ",
+    neverMarried: "અવિવાહિત",
+divorced: "છૂટાછેડા લીધેલ",
+widowed: "વિધવા / વિધુર",
+separated: "અલગ રહેતા",
+    motherTongue: "માતૃભાષા",
+    currentCity: "હાલનું શહેર",
+    aboutMe: "મારા વિશે",
+    selectOptional: "ઇચ્છો તો પસંદ કરો",
+  },
+};
+
 type FormData = {
   fullName: string;
   dateOfBirth: string;
@@ -336,6 +470,9 @@ contactState: "",
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
 
+  const [language, setLanguage] = useState("en");
+  const t = translations[language as keyof typeof translations];
+
   // Load saved biodata when the page opens
 // Load saved biodata when the page opens
 useEffect(() => {
@@ -516,28 +653,84 @@ useEffect(() => {
               <p className="text-sm font-bold text-orange-600">STEP 1 OF 6</p>
 
               <h2 className="mt-1 text-2xl font-bold text-slate-900">
-                Personal Details
+               {t.personalDetails}
               </h2>
 
               <p className="mt-2 text-sm leading-6 text-slate-500">
-                Only your name is required. Leave any other field blank if you
-                do not want it on your biodata.
+                {t.step1Description}
               </p>
+
+              {/* BIODATA LANGUAGE */}
+<div className="mt-6">
+  <label className="mb-2 block text-sm font-semibold text-slate-700">
+    {t.language}
+  </label>
+
+  <div className="flex flex-wrap gap-2">
+    <button
+      type="button"
+      onClick={() => setLanguage("en")}
+      className={`rounded-lg border px-4 py-2 text-sm font-semibold transition ${
+        language === "en"
+          ? "border-orange-500 bg-orange-50 text-orange-600"
+          : "border-slate-200 bg-white text-slate-600 hover:border-orange-300"
+      }`}
+    >
+      English
+    </button>
+
+    <button
+      type="button"
+      onClick={() => setLanguage("mr")}
+      className={`rounded-lg border px-4 py-2 text-sm font-semibold transition ${
+        language === "mr"
+          ? "border-orange-500 bg-orange-50 text-orange-600"
+          : "border-slate-200 bg-white text-slate-600 hover:border-orange-300"
+      }`}
+    >
+      मराठी
+    </button>
+
+    <button
+      type="button"
+      onClick={() => setLanguage("hi")}
+      className={`rounded-lg border px-4 py-2 text-sm font-semibold transition ${
+        language === "hi"
+          ? "border-orange-500 bg-orange-50 text-orange-600"
+          : "border-slate-200 bg-white text-slate-600 hover:border-orange-300"
+      }`}
+    >
+      हिंदी
+    </button>
+
+    <button
+      type="button"
+      onClick={() => setLanguage("gu")}
+      className={`rounded-lg border px-4 py-2 text-sm font-semibold transition ${
+        language === "gu"
+          ? "border-orange-500 bg-orange-50 text-orange-600"
+          : "border-slate-200 bg-white text-slate-600 hover:border-orange-300"
+      }`}
+    >
+      ગુજરાતી
+    </button>
+  </div>
+</div>
 
               <div className="mt-7 grid gap-5 sm:grid-cols-2">
                 <Field
-                  label="Full Name"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={updateField}
-                  placeholder="Enter your full name"
-                  required
-                />
+  label={t.fullName}
+  name="fullName"
+  value={formData.fullName}
+  onChange={updateField}
+  placeholder={t.fullNamePlaceholder}
+  required
+/>
 
                 {/* COMPACT SYMBOL FIELD */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-700">
-                    Biodata Symbol
+                    {t.biodataSymbol}
                   </label>
 
                   <button
@@ -577,7 +770,7 @@ useEffect(() => {
                 </div>
 
                 <Field
-                  label="Date of Birth"
+                  label={t.dateOfBirth}
                   name="dateOfBirth"
                   value={formData.dateOfBirth}
                   onChange={updateField}
@@ -585,7 +778,7 @@ useEffect(() => {
                 />
 
                 <Field
-                  label="Time of Birth"
+                  label={t.timeOfBirth}
                   name="birthTime"
                   value={formData.birthTime}
                   onChange={updateField}
@@ -593,44 +786,47 @@ useEffect(() => {
                 />
 
                 <Field
-                  label="Place of Birth"
+                  label={t.placeOfBirth}
                   name="birthPlace"
                   value={formData.birthPlace}
                   onChange={updateField}
-                  placeholder="City / Village"
+                  placeholder={t.placeOfBirthPlaceholder}
                 />
 
                 <SelectField
-                  label="Gender"
+                  label={t.gender}
                   name="gender"
                   value={formData.gender}
                   onChange={updateField}
-                  options={["Male", "Female", "Other"]}
+                  options={[t.male, t.female, t.other]}
+                  placeholder={t.selectOptional}
                 />
 
                 <Field
-                  label="Height"
+                  label={t.height}
                   name="height"
                   value={formData.height}
                   onChange={updateField}
-                  placeholder={`Example: 5' 8"`}
+                  placeholder={t.heightPlaceholder}
                 />
 
                 <SelectField
-                  label="Marital Status"
+                  label={t.maritalStatus}
                   name="maritalStatus"
                   value={formData.maritalStatus}
                   onChange={updateField}
                   options={[
-                    "Never Married",
-                    "Divorced",
-                    "Widowed",
-                    "Separated",
+  t.neverMarried,
+  t.divorced,
+  t.widowed,
+  t.separated,
+
                   ]}
+                  placeholder={t.selectOptional}
                 />
 
                 <Field
-                  label="Mother Tongue"
+                  label={t.motherTongue}
                   name="motherTongue"
                   value={formData.motherTongue}
                   onChange={updateField}
@@ -638,7 +834,7 @@ useEffect(() => {
                 />
 
                 <Field
-                  label="Current City"
+                  label={t.currentCity}
                   name="currentCity"
                   value={formData.currentCity}
                   onChange={updateField}
@@ -1637,12 +1833,14 @@ function SelectField({
   value,
   onChange,
   options,
+  placeholder = "Select if you want",
 }: {
   label: string;
   name: string;
   value: string;
   onChange: ChangeHandler;
   options: string[];
+  placeholder?: string;
 }) {
   return (
     <div>
@@ -1656,7 +1854,7 @@ function SelectField({
         onChange={onChange}
         className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-orange-400 focus:ring-4 focus:ring-orange-50"
       >
-        <option value="">Select if you want</option>
+        <option value="">{placeholder}</option>
 
         {options.map((option) => (
           <option key={option} value={option}>
