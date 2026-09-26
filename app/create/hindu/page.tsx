@@ -14,6 +14,75 @@ const translations = {
     personalDetails: "Personal Details",
     step1Description:
       "Only your name is required. Leave any other field blank if you do not want it on your biodata.",
+      educationCareer: "Education & Career",
+step2Description:
+  "All fields are optional. Add only the education and career details you want to show on your biodata.",
+  
+
+  // Step 3 - Family
+familyDetails: "Family Details",
+step3Description:
+  "All family details are optional. Add only the information you want to show on your biodata.",
+fatherName: "Father's Name",
+fatherOccupation: "Father's Occupation",
+motherName: "Mother's Name",
+motherOccupation: "Mother's Occupation",
+brothers: "Brothers",
+sisters: "Sisters",
+familyType: "Family Type",
+familyLocation: "Family Location",
+additionalFamilyDetails: "Additional Family Details",
+
+fatherNamePlaceholder: "Enter father's name",
+fatherOccupationPlaceholder: "Example: Business, Service",
+motherNamePlaceholder: "Enter mother's name",
+motherOccupationPlaceholder: "Example: Homemaker, Teacher",
+brothersPlaceholder: "Example: 1",
+sistersPlaceholder: "Example: 1",
+familyLocationPlaceholder: "Example: Pune, Maharashtra",
+additionalFamilyDetailsPlaceholder:
+  "Add any other family information you want to include...",
+
+// Step 4 - Traditional
+traditionalDetails: "Hindu / Traditional Details",
+step4Description:
+  "All traditional details are optional. Add only the information you want to show on your biodata.",
+communityCaste: "Community / Caste",
+subCommunity: "Sub-Community",
+gotra: "Gotra",
+rashi: "Rashi",
+nakshatra: "Nakshatra",
+manglik: "Manglik",
+horoscopeAvailable: "Horoscope Available",
+additionalTraditionalDetails: "Additional Traditional Details",
+
+communityCastePlaceholder: "Enter community or caste",
+subCommunityPlaceholder: "Enter sub-community if applicable",
+gotraPlaceholder: "Enter Gotra",
+rashiPlaceholder: "Example: Mesh / Aries",
+nakshatraPlaceholder: "Enter Nakshatra",
+additionalTraditionalDetailsPlaceholder:
+  "Add any other traditional, horoscope or family details you want to include...",
+
+// Step 5 - Contact
+contactDetails: "Contact Details",
+step5Description:
+  "All contact details are optional. Add only the information you want to show on your biodata.",
+contactPerson: "Contact Person",
+mobileNumber: "Mobile Number",
+alternateNumber: "Alternate Number",
+emailAddress: "Email Address",
+city: "City",
+state: "State",
+fullAddress: "Full Address",
+
+contactPersonPlaceholder: "Example: Father, Brother or Self",
+mobileNumberPlaceholder: "Enter mobile number",
+alternateNumberPlaceholder: "Enter alternate number",
+emailAddressPlaceholder: "example@email.com",
+cityPlaceholder: "Example: Pune",
+statePlaceholder: "Example: Maharashtra",
+fullAddressPlaceholder: "Enter address you want to show on the biodata...",
     fullName: "Full Name",
     fullNamePlaceholder: "Enter your full name",
     biodataSymbol: "Biodata Symbol",
@@ -25,6 +94,7 @@ const translations = {
     male: "Male",
 female: "Female",
 other: "Other",
+height: "Height",
     heightPlaceholder: "Example: 5' 8\"",
     maritalStatus: "Marital Status",
     neverMarried: "Never Married",
@@ -32,9 +102,34 @@ divorced: "Divorced",
 widowed: "Widowed",
 separated: "Separated",
     motherTongue: "Mother Tongue",
+    motherTonguePlaceholder: "Example: Marathi",
     currentCity: "Current City",
+    currentCityPlaceholder: "Example: Pune, Maharashtra",
     aboutMe: "About Me",
+    aboutMePlaceholder: "Write something about yourself...",
     selectOptional: "Select if you want",
+    highestQualification: "Highest Qualification",
+degreeCourse: "Degree / Course",
+collegeUniversity: "College / University",
+occupation: "Occupation",
+companyBusiness: "Company / Business",
+designation: "Designation",
+workLocation: "Work Location",
+annualIncome: "Annual Income",
+additionalCareerDetails: "Additional Education / Career Details",
+
+highestQualificationPlaceholder: "Example: B.Tech, MBA, B.Com",
+degreeCoursePlaceholder: "Example: Computer Science",
+collegeUniversityPlaceholder: "College / University name",
+occupationPlaceholder: "Example: Software Engineer",
+companyBusinessPlaceholder: "Company or business name",
+designationPlaceholder: "Example: Senior Developer",
+workLocationPlaceholder: "Example: Pune, Maharashtra",
+annualIncomePlaceholder: "Example: ₹8–10 LPA",
+additionalCareerDetailsPlaceholder:
+  "Add any additional education or career information",
+  // English
+livePreview: "Live Preview",
   },
 
   mr: {
@@ -47,6 +142,73 @@ separated: "Separated",
     personalDetails: "वैयक्तिक माहिती",
     step1Description:
       "फक्त तुमचे नाव आवश्यक आहे. बायोडाटामध्ये नको असलेली माहिती रिकामी ठेवू शकता.",
+      educationCareer: "शिक्षण आणि करिअर",
+step2Description:
+  "सर्व माहिती ऐच्छिक आहे. बायोडाटामध्ये दाखवायची असलेली शिक्षण आणि करिअरची माहितीच भरा.",
+  // Step 3 - Family
+familyDetails: "कौटुंबिक माहिती",
+step3Description:
+  "कुटुंबाची सर्व माहिती ऐच्छिक आहे. बायोडाटामध्ये दाखवायची असलेली माहितीच भरा.",
+fatherName: "वडिलांचे नाव",
+fatherOccupation: "वडिलांचा व्यवसाय",
+motherName: "आईचे नाव",
+motherOccupation: "आईचा व्यवसाय",
+brothers: "भाऊ",
+sisters: "बहिणी",
+familyType: "कुटुंबाचा प्रकार",
+familyLocation: "कुटुंबाचे ठिकाण",
+additionalFamilyDetails: "अतिरिक्त कौटुंबिक माहिती",
+
+fatherNamePlaceholder: "वडिलांचे नाव लिहा",
+fatherOccupationPlaceholder: "उदाहरण: व्यवसाय, नोकरी",
+motherNamePlaceholder: "आईचे नाव लिहा",
+motherOccupationPlaceholder: "उदाहरण: गृहिणी, शिक्षिका",
+brothersPlaceholder: "उदाहरण: 1",
+sistersPlaceholder: "उदाहरण: 1",
+familyLocationPlaceholder: "उदाहरण: पुणे, महाराष्ट्र",
+additionalFamilyDetailsPlaceholder:
+  "इतर कौटुंबिक माहिती असल्यास येथे लिहा...",
+
+// Step 4 - Traditional
+traditionalDetails: "हिंदू / पारंपरिक माहिती",
+step4Description:
+  "सर्व पारंपरिक माहिती ऐच्छिक आहे. बायोडाटामध्ये दाखवायची असलेली माहितीच भरा.",
+communityCaste: "समाज / जात",
+subCommunity: "उपसमाज",
+gotra: "गोत्र",
+rashi: "राशी",
+nakshatra: "नक्षत्र",
+manglik: "मंगळिक",
+horoscopeAvailable: "कुंडली उपलब्ध",
+additionalTraditionalDetails: "अतिरिक्त पारंपरिक माहिती",
+
+communityCastePlaceholder: "समाज किंवा जात लिहा",
+subCommunityPlaceholder: "लागू असल्यास उपसमाज लिहा",
+gotraPlaceholder: "गोत्र लिहा",
+rashiPlaceholder: "उदाहरण: मेष",
+nakshatraPlaceholder: "नक्षत्र लिहा",
+additionalTraditionalDetailsPlaceholder:
+  "इतर पारंपरिक किंवा कुंडलीविषयक माहिती असल्यास येथे लिहा...",
+
+// Step 5 - Contact
+contactDetails: "संपर्क माहिती",
+step5Description:
+  "सर्व संपर्क माहिती ऐच्छिक आहे. बायोडाटामध्ये दाखवायची असलेली माहितीच भरा.",
+contactPerson: "संपर्क व्यक्ती",
+mobileNumber: "मोबाईल क्रमांक",
+alternateNumber: "पर्यायी क्रमांक",
+emailAddress: "ईमेल पत्ता",
+city: "शहर",
+state: "राज्य",
+fullAddress: "पूर्ण पत्ता",
+
+contactPersonPlaceholder: "उदाहरण: वडील, भाऊ किंवा स्वतः",
+mobileNumberPlaceholder: "मोबाईल क्रमांक लिहा",
+alternateNumberPlaceholder: "पर्यायी क्रमांक लिहा",
+emailAddressPlaceholder: "example@email.com",
+cityPlaceholder: "उदाहरण: पुणे",
+statePlaceholder: "उदाहरण: महाराष्ट्र",
+fullAddressPlaceholder: "बायोडाटामध्ये दाखवायचा पत्ता लिहा...",
     fullName: "पूर्ण नाव",
     fullNamePlaceholder: "तुमचे पूर्ण नाव लिहा",
     biodataSymbol: "बायोडाटा चिन्ह",
@@ -66,9 +228,35 @@ divorced: "घटस्फोटित",
 widowed: "विधवा / विधुर",
 separated: "विभक्त",
     motherTongue: "मातृभाषा",
+    motherTonguePlaceholder: "उदाहरण: मराठी",
     currentCity: "सध्याचे शहर",
+    currentCityPlaceholder: "उदाहरण: पुणे, महाराष्ट्र",
     aboutMe: "माझ्याबद्दल",
+    aboutMePlaceholder: "स्वतःबद्दल थोडक्यात लिहा...",
     selectOptional: "हवे असल्यास निवडा",
+    highestQualification: "सर्वोच्च शैक्षणिक पात्रता",
+degreeCourse: "पदवी / अभ्यासक्रम",
+collegeUniversity: "महाविद्यालय / विद्यापीठ",
+occupation: "व्यवसाय",
+companyBusiness: "कंपनी / व्यवसाय",
+designation: "पद",
+workLocation: "कामाचे ठिकाण",
+annualIncome: "वार्षिक उत्पन्न",
+additionalCareerDetails: "अतिरिक्त शिक्षण / करिअर माहिती",
+highestQualificationPlaceholder: "उदाहरण: B.Tech, MBA, B.Com",
+degreeCoursePlaceholder: "उदाहरण: Computer Science",
+collegeUniversityPlaceholder: "महाविद्यालय / विद्यापीठाचे नाव",
+occupationPlaceholder: "उदाहरण: Software Engineer",
+companyBusinessPlaceholder: "कंपनी किंवा व्यवसायाचे नाव",
+designationPlaceholder: "उदाहरण: Senior Developer",
+workLocationPlaceholder: "उदाहरण: पुणे, महाराष्ट्र",
+annualIncomePlaceholder: "उदाहरण: ₹8–10 LPA",
+additionalCareerDetailsPlaceholder:
+  "अतिरिक्त शिक्षण किंवा करिअरची माहिती लिहा",
+  // Marathi
+livePreview: "थेट पूर्वदृश्य",
+
+    
   },
 
   hi: {
@@ -81,6 +269,73 @@ separated: "विभक्त",
     personalDetails: "व्यक्तिगत जानकारी",
     step1Description:
       "केवल आपका नाम आवश्यक है। जो जानकारी बायोडाटा में नहीं चाहिए उसे खाली छोड़ सकते हैं।",
+      educationCareer: "शिक्षा और करियर",
+step2Description:
+  "सभी जानकारी वैकल्पिक है। बायोडाटा में केवल वही शिक्षा और करियर की जानकारी भरें जो आप दिखाना चाहते हैं।",
+  // Step 3 - Family
+familyDetails: "पारिवारिक जानकारी",
+step3Description:
+  "परिवार की सभी जानकारी वैकल्पिक है। बायोडाटा में केवल वही जानकारी भरें जो आप दिखाना चाहते हैं।",
+fatherName: "पिता का नाम",
+fatherOccupation: "पिता का व्यवसाय",
+motherName: "माता का नाम",
+motherOccupation: "माता का व्यवसाय",
+brothers: "भाई",
+sisters: "बहनें",
+familyType: "परिवार का प्रकार",
+familyLocation: "परिवार का स्थान",
+additionalFamilyDetails: "अतिरिक्त पारिवारिक जानकारी",
+
+fatherNamePlaceholder: "पिता का नाम लिखें",
+fatherOccupationPlaceholder: "उदाहरण: व्यवसाय, नौकरी",
+motherNamePlaceholder: "माता का नाम लिखें",
+motherOccupationPlaceholder: "उदाहरण: गृहिणी, शिक्षिका",
+brothersPlaceholder: "उदाहरण: 1",
+sistersPlaceholder: "उदाहरण: 1",
+familyLocationPlaceholder: "उदाहरण: पुणे, महाराष्ट्र",
+additionalFamilyDetailsPlaceholder:
+  "अन्य पारिवारिक जानकारी यहाँ लिखें...",
+
+// Step 4 - Traditional
+traditionalDetails: "हिंदू / पारंपरिक जानकारी",
+step4Description:
+  "सभी पारंपरिक जानकारी वैकल्पिक है। बायोडाटा में केवल वही जानकारी भरें जो आप दिखाना चाहते हैं।",
+communityCaste: "समुदाय / जाति",
+subCommunity: "उप-समुदाय",
+gotra: "गोत्र",
+rashi: "राशि",
+nakshatra: "नक्षत्र",
+manglik: "मांगलिक",
+horoscopeAvailable: "कुंडली उपलब्ध",
+additionalTraditionalDetails: "अतिरिक्त पारंपरिक जानकारी",
+
+communityCastePlaceholder: "समुदाय या जाति लिखें",
+subCommunityPlaceholder: "यदि लागू हो तो उप-समुदाय लिखें",
+gotraPlaceholder: "गोत्र लिखें",
+rashiPlaceholder: "उदाहरण: मेष",
+nakshatraPlaceholder: "नक्षत्र लिखें",
+additionalTraditionalDetailsPlaceholder:
+  "अन्य पारंपरिक या कुंडली संबंधी जानकारी यहाँ लिखें...",
+
+// Step 5 - Contact
+contactDetails: "संपर्क जानकारी",
+step5Description:
+  "सभी संपर्क जानकारी वैकल्पिक है। बायोडाटा में केवल वही जानकारी भरें जो आप दिखाना चाहते हैं।",
+contactPerson: "संपर्क व्यक्ति",
+mobileNumber: "मोबाइल नंबर",
+alternateNumber: "वैकल्पिक नंबर",
+emailAddress: "ईमेल पता",
+city: "शहर",
+state: "राज्य",
+fullAddress: "पूरा पता",
+
+contactPersonPlaceholder: "उदाहरण: पिता, भाई या स्वयं",
+mobileNumberPlaceholder: "मोबाइल नंबर लिखें",
+alternateNumberPlaceholder: "वैकल्पिक नंबर लिखें",
+emailAddressPlaceholder: "example@email.com",
+cityPlaceholder: "उदाहरण: पुणे",
+statePlaceholder: "उदाहरण: महाराष्ट्र",
+fullAddressPlaceholder: "बायोडाटा में दिखाने वाला पता लिखें...",
     fullName: "पूरा नाम",
     fullNamePlaceholder: "अपना पूरा नाम लिखें",
     biodataSymbol: "बायोडाटा चिन्ह",
@@ -100,9 +355,34 @@ divorced: "तलाकशुदा",
 widowed: "विधवा / विधुर",
 separated: "अलग रह रहे",
     motherTongue: "मातृभाषा",
+    motherTonguePlaceholder: "उदाहरण: हिंदी",
     currentCity: "वर्तमान शहर",
+    currentCityPlaceholder: "उदाहरण: पुणे, महाराष्ट्र",
     aboutMe: "मेरे बारे में",
+    aboutMePlaceholder: "अपने बारे में थोड़ा लिखें...",
     selectOptional: "यदि चाहें तो चुनें",
+    highestQualification: "उच्चतम शैक्षणिक योग्यता",
+degreeCourse: "डिग्री / कोर्स",
+collegeUniversity: "कॉलेज / विश्वविद्यालय",
+occupation: "व्यवसाय",
+companyBusiness: "कंपनी / व्यवसाय",
+designation: "पद",
+workLocation: "कार्य स्थान",
+annualIncome: "वार्षिक आय",
+additionalCareerDetails: "अतिरिक्त शिक्षा / करियर जानकारी",
+
+highestQualificationPlaceholder: "उदाहरण: B.Tech, MBA, B.Com",
+degreeCoursePlaceholder: "उदाहरण: Computer Science",
+collegeUniversityPlaceholder: "कॉलेज / विश्वविद्यालय का नाम",
+occupationPlaceholder: "उदाहरण: Software Engineer",
+companyBusinessPlaceholder: "कंपनी या व्यवसाय का नाम",
+designationPlaceholder: "उदाहरण: Senior Developer",
+workLocationPlaceholder: "उदाहरण: पुणे, महाराष्ट्र",
+annualIncomePlaceholder: "उदाहरण: ₹8–10 LPA",
+additionalCareerDetailsPlaceholder:
+  "अतिरिक्त शिक्षा या करियर की जानकारी लिखें",
+  // Hindi
+livePreview: "लाइव पूर्वावलोकन",
   },
 
   gu: {
@@ -115,6 +395,73 @@ separated: "अलग रह रहे",
     personalDetails: "વ્યક્તિગત માહિતી",
     step1Description:
       "ફક્ત તમારું નામ જરૂરી છે. બાયોડેટામાં ન જોઈતી માહિતી ખાલી રાખી શકો છો.",
+      educationCareer: "શિક્ષણ અને કારકિર્દી",
+step2Description:
+  "બધી માહિતી વૈકલ્પિક છે. બાયોડેટામાં તમે બતાવવા માંગતા હો તે શિક્ષણ અને કારકિર્દીની માહિતી જ ભરો.",
+  // Step 3 - Family
+familyDetails: "કૌટુંબિક માહિતી",
+step3Description:
+  "પરિવારની બધી માહિતી વૈકલ્પિક છે. બાયોડેટામાં તમે બતાવવા માંગતા હો તે માહિતી જ ભરો.",
+fatherName: "પિતાનું નામ",
+fatherOccupation: "પિતાનો વ્યવસાય",
+motherName: "માતાનું નામ",
+motherOccupation: "માતાનો વ્યવસાય",
+brothers: "ભાઈઓ",
+sisters: "બહેનો",
+familyType: "પરિવારનો પ્રકાર",
+familyLocation: "પરિવારનું સ્થળ",
+additionalFamilyDetails: "વધારાની કૌટુંબિક માહિતી",
+
+fatherNamePlaceholder: "પિતાનું નામ લખો",
+fatherOccupationPlaceholder: "ઉદાહરણ: વ્યવસાય, નોકરી",
+motherNamePlaceholder: "માતાનું નામ લખો",
+motherOccupationPlaceholder: "ઉદાહરણ: ગૃહિણી, શિક્ષિકા",
+brothersPlaceholder: "ઉદાહરણ: 1",
+sistersPlaceholder: "ઉદાહરણ: 1",
+familyLocationPlaceholder: "ઉદાહરણ: અમદાવાદ, ગુજરાત",
+additionalFamilyDetailsPlaceholder:
+  "અન્ય કૌટુંબિક માહિતી અહીં લખો...",
+
+// Step 4 - Traditional
+traditionalDetails: "હિંદુ / પરંપરાગત માહિતી",
+step4Description:
+  "બધી પરંપરાગત માહિતી વૈકલ્પિક છે. બાયોડેટામાં તમે બતાવવા માંગતા હો તે માહિતી જ ભરો.",
+communityCaste: "સમુદાય / જાતિ",
+subCommunity: "પેટા-સમુદાય",
+gotra: "ગોત્ર",
+rashi: "રાશિ",
+nakshatra: "નક્ષત્ર",
+manglik: "માંગલિક",
+horoscopeAvailable: "કુંડળી ઉપલબ્ધ",
+additionalTraditionalDetails: "વધારાની પરંપરાગત માહિતી",
+
+communityCastePlaceholder: "સમુદાય અથવા જાતિ લખો",
+subCommunityPlaceholder: "લાગુ પડતું હોય તો પેટા-સમુદાય લખો",
+gotraPlaceholder: "ગોત્ર લખો",
+rashiPlaceholder: "ઉદાહરણ: મેષ",
+nakshatraPlaceholder: "નક્ષત્ર લખો",
+additionalTraditionalDetailsPlaceholder:
+  "અન્ય પરંપરાગત અથવા કુંડળી સંબંધિત માહિતી અહીં લખો...",
+
+// Step 5 - Contact
+contactDetails: "સંપર્ક માહિતી",
+step5Description:
+  "બધી સંપર્ક માહિતી વૈકલ્પિક છે. બાયોડેટામાં તમે બતાવવા માંગતા હો તે માહિતી જ ભરો.",
+contactPerson: "સંપર્ક વ્યક્તિ",
+mobileNumber: "મોબાઇલ નંબર",
+alternateNumber: "વૈકલ્પિક નંબર",
+emailAddress: "ઈમેલ સરનામું",
+city: "શહેર",
+state: "રાજ્ય",
+fullAddress: "પૂર્ણ સરનામું",
+
+contactPersonPlaceholder: "ઉદાહરણ: પિતા, ભાઈ અથવા પોતે",
+mobileNumberPlaceholder: "મોબાઇલ નંબર લખો",
+alternateNumberPlaceholder: "વૈકલ્પિક નંબર લખો",
+emailAddressPlaceholder: "example@email.com",
+cityPlaceholder: "ઉદાહરણ: અમદાવાદ",
+statePlaceholder: "ઉદાહરણ: ગુજરાત",
+fullAddressPlaceholder: "બાયોડેટામાં બતાવવાનું સરનામું લખો...",
     fullName: "પૂરું નામ",
     fullNamePlaceholder: "તમારું પૂરું નામ લખો",
     biodataSymbol: "બાયોડેટા ચિહ્ન",
@@ -123,7 +470,10 @@ separated: "अलग रह रहे",
     placeOfBirth: "જન્મ સ્થળ",
     placeOfBirthPlaceholder: "શહેર / ગામ",
     gender: "લિંગ",
-    height: "ઊંચાઈ",
+male: "પુરુષ",
+female: "સ્ત્રી",
+other: "અન્ય",
+height: "ઊંચાઈ",  
     heightPlaceholder: "ઉદાહરણ: 5' 8\"",
     maritalStatus: "વૈવાહિક સ્થિતિ",
     neverMarried: "અવિવાહિત",
@@ -131,9 +481,33 @@ divorced: "છૂટાછેડા લીધેલ",
 widowed: "વિધવા / વિધુર",
 separated: "અલગ રહેતા",
     motherTongue: "માતૃભાષા",
+    motherTonguePlaceholder: "ઉદાહરણ: ગુજરાતી",
     currentCity: "હાલનું શહેર",
+    currentCityPlaceholder: "ઉદાહરણ: અમદાવાદ, ગુજરાત",
     aboutMe: "મારા વિશે",
+    aboutMePlaceholder: "તમારા વિશે થોડું લખો...",
     selectOptional: "ઇચ્છો તો પસંદ કરો",
+    highestQualification: "ઉચ્ચતમ શૈક્ષણિક લાયકાત",
+degreeCourse: "ડિગ્રી / કોર્સ",
+collegeUniversity: "કોલેજ / યુનિવર્સિટી",
+occupation: "વ્યવસાય",
+companyBusiness: "કંપની / વ્યવસાય",
+designation: "હોદ્દો",
+workLocation: "કામનું સ્થળ",
+annualIncome: "વાર્ષિક આવક",
+additionalCareerDetails: "વધારાની શિક્ષણ / કારકિર્દી માહિતી",
+highestQualificationPlaceholder: "ઉદાહરણ: B.Tech, MBA, B.Com",
+degreeCoursePlaceholder: "ઉદાહરણ: Computer Science",
+collegeUniversityPlaceholder: "કોલેજ / યુનિવર્સિટીનું નામ",
+occupationPlaceholder: "ઉદાહરણ: Software Engineer",
+companyBusinessPlaceholder: "કંપની અથવા વ્યવસાયનું નામ",
+designationPlaceholder: "ઉદાહરણ: Senior Developer",
+workLocationPlaceholder: "ઉદાહરણ: અમદાવાદ, ગુજરાત",
+annualIncomePlaceholder: "ઉદાહરણ: ₹8–10 LPA",
+additionalCareerDetailsPlaceholder:
+  "વધારાની શિક્ષણ અથવા કારકિર્દીની માહિતી લખો",
+  // Gujarati
+livePreview: "લાઇવ પૂર્વાવલોકન",
   },
 };
 
@@ -469,6 +843,8 @@ contactState: "",
   const [photo, setPhoto] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  
 
   const [language, setLanguage] = useState("en");
   const t = translations[language as keyof typeof translations];
@@ -542,6 +918,18 @@ useEffect(() => {
     }));
   }
 
+  function startAgain() {
+  const confirmed = window.confirm(
+    "Start again? This will clear all the details you entered."
+  );
+
+  if (!confirmed) return;
+
+  localStorage.removeItem("hinduBiodataDraft");
+
+  window.location.reload();
+}
+
   function handlePhoto(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
 
@@ -595,6 +983,16 @@ useEffect(() => {
       </section>
 
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-5">
+<div className="mb-4 flex justify-end">
+  <button
+    type="button"
+    onClick={startAgain}
+    className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-orange-300 hover:text-orange-600"
+  >
+    ↻ Start Again
+  </button>
+</div>
+
         <div className="mb-8 overflow-x-auto pb-2">
           <div className="flex min-w-[720px] items-center">
            <ProgressStep
@@ -645,7 +1043,7 @@ useEffect(() => {
           </div>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_400px]">
+        <div className="mx-auto w-full max-w-4xl">
           <div className="space-y-6">
             {currentStep === 1 && (
                <>
@@ -822,7 +1220,7 @@ useEffect(() => {
   t.separated,
 
                   ]}
-                  placeholder={t.selectOptional}
+                  placeholder={t.selectOptional}/*  */
                 />
 
                 <Field
@@ -830,7 +1228,7 @@ useEffect(() => {
                   name="motherTongue"
                   value={formData.motherTongue}
                   onChange={updateField}
-                  placeholder="Example: Marathi"
+                  placeholder={t.motherTonguePlaceholder}
                 />
 
                 <Field
@@ -838,12 +1236,12 @@ useEffect(() => {
                   name="currentCity"
                   value={formData.currentCity}
                   onChange={updateField}
-                  placeholder="Example: Pune, Maharashtra"
+                  placeholder={t.currentCityPlaceholder}
                 />
 
                 <div className="sm:col-span-2">
                   <label className="mb-2 block text-sm font-semibold text-slate-700">
-                    About Me
+                    {t.aboutMe}
                   </label>
 
                   <textarea
@@ -851,7 +1249,7 @@ useEffect(() => {
                     value={formData.aboutMe}
                     onChange={updateField}
                     rows={4}
-                    placeholder="Write something about yourself..."
+                    placeholder={t.aboutMePlaceholder}
                     className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition placeholder:text-slate-400 focus:border-orange-400 focus:ring-4 focus:ring-orange-50"
                   />
                 </div>
@@ -931,78 +1329,77 @@ useEffect(() => {
     </p>
 
     <h2 className="mt-1 text-2xl font-bold text-slate-900">
-      Education & Career
+      {t.educationCareer}
     </h2>
 
     <p className="mt-2 text-sm leading-6 text-slate-500">
-      All fields are optional. Add only the education and career details
-      you want to show on your biodata.
+      {t.step2Description}
     </p>
 
    <div className="mt-7">
    <div className="mt-7 grid gap-5 sm:grid-cols-2">
   <Field
-    label="Highest Qualification"
+    label={t.highestQualification}
     name="highestQualification"
     value={formData.highestQualification}
     onChange={updateField}
-    placeholder="Example: B.Tech, MBA, B.Com"
+    placeholder={t.highestQualificationPlaceholder}
   />
 
   <Field
-    label="Degree / Course"
+    label={t.degreeCourse}
     name="degreeCourse"
     value={formData.degreeCourse}
     onChange={updateField}
-    placeholder="Example: Computer Science"
+    placeholder={t.degreeCoursePlaceholder}
   />
 
   <Field
-    label="College / University"
+    label={t.collegeUniversity}
     name="collegeUniversity"
     value={formData.collegeUniversity}
     onChange={updateField}
-    placeholder="College / University name"
+    placeholder={t.collegeUniversityPlaceholder}
   />
 
   <Field
-    label="Occupation"
+    label={t.occupation}
     name="occupation"
     value={formData.occupation}
     onChange={updateField}
-    placeholder="Example: Software Engineer"
+    placeholder={t.occupationPlaceholder}
   />
 
   <Field
-    label="Company / Business"
+    label={t.companyBusiness}
     name="companyBusiness"
     value={formData.companyBusiness}
     onChange={updateField}
-    placeholder="Company or business name"
+    placeholder={t.companyBusinessPlaceholder}
   />
 
   <Field
-    label="Designation"
+    label={t.designation}
     name="designation"
     value={formData.designation}
     onChange={updateField}
-    placeholder="Example: Senior Developer"
+    placeholder={t.designationPlaceholder}
   />
 
   <Field
-    label="Work Location"
+    label={t.workLocation}
     name="workLocation"
     value={formData.workLocation}
     onChange={updateField}
-    placeholder="Example: Pune, Maharashtra"
+    placeholder={t.workLocationPlaceholder}
   />
 
   <Field
-    label="Annual Income"
+    label={t.annualIncome}
     name="annualIncome"
     value={formData.annualIncome}
     onChange={updateField}
-    placeholder="Example: ₹8–10 LPA"
+    placeholder={t.annualIncomePlaceholder}
   />
 
   <div className="sm:col-span-2">
@@ -1049,65 +1446,64 @@ useEffect(() => {
     </p>
 
     <h2 className="mt-1 text-2xl font-bold text-slate-900">
-      Family Details
+      {t.familyDetails}
     </h2>
 
     <p className="mt-2 text-sm leading-6 text-slate-500">
-      All family details are optional. Add only the information you want to
-      show on your biodata.
+      {t.step3Description}
     </p>
 
     <div className="mt-7 grid gap-5 sm:grid-cols-2">
       <Field
-        label="Father's Name"
+        label={t.fatherName}
         name="fatherName"
         value={formData.fatherName}
         onChange={updateField}
-        placeholder="Enter father's name"
+placeholder={t.fatherNamePlaceholder}
       />
 
       <Field
-        label="Father's Occupation"
+label={t.fatherOccupation}
         name="fatherOccupation"
         value={formData.fatherOccupation}
         onChange={updateField}
-        placeholder="Example: Business, Service"
+placeholder={t.fatherOccupationPlaceholder}
       />
 
       <Field
-        label="Mother's Name"
+label={t.motherName}
         name="motherName"
         value={formData.motherName}
         onChange={updateField}
-        placeholder="Enter mother's name"
+placeholder={t.motherNamePlaceholder}
       />
 
       <Field
-        label="Mother's Occupation"
+label={t.motherOccupation}
         name="motherOccupation"
         value={formData.motherOccupation}
         onChange={updateField}
-        placeholder="Example: Homemaker, Teacher"
+placeholder={t.motherOccupationPlaceholder}
       />
 
       <Field
-        label="Brothers"
+label={t.brothers}
         name="brothers"
         value={formData.brothers}
         onChange={updateField}
-        placeholder="Example: 1"
+placeholder={t.brothersPlaceholder}
       />
 
       <Field
-        label="Sisters"
+label={t.sisters}
         name="sisters"
         value={formData.sisters}
         onChange={updateField}
-        placeholder="Example: 1"
+placeholder={t.sistersPlaceholder}
       />
 
       <SelectField
-        label="Family Type"
+label={t.familyType}
         name="familyType"
         value={formData.familyType}
         onChange={updateField}
@@ -1115,16 +1511,15 @@ useEffect(() => {
       />
 
       <Field
-        label="Family Location"
+label={t.familyLocation}
         name="familyLocation"
         value={formData.familyLocation}
         onChange={updateField}
-        placeholder="Example: Pune, Maharashtra"
-      />
+placeholder={t.familyLocationPlaceholder}      />
 
       <div className="sm:col-span-2">
         <label className="mb-2 block text-sm font-semibold text-slate-800">
-          Additional Family Details
+          {t.additionalFamilyDetails}
         </label>
 
         <textarea
@@ -1132,7 +1527,7 @@ useEffect(() => {
           value={formData.familyDetails}
           onChange={updateField}
           rows={4}
-          placeholder="Add any other family information you want to include..."
+          placeholder={t.additionalFamilyDetailsPlaceholder}
           className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
         />
       </div>
@@ -1165,57 +1560,56 @@ useEffect(() => {
     </p>
 
     <h2 className="mt-1 text-2xl font-bold text-slate-900">
-      Hindu / Traditional Details
+      {t.traditionalDetails}
     </h2>
 
     <p className="mt-2 text-sm leading-6 text-slate-500">
-      All traditional details are optional. Add only the information you want
-      to show on your biodata.
+      {t.step4Description}
     </p>
 
     <div className="mt-7 grid gap-5 sm:grid-cols-2">
       <Field
-        label="Community / Caste"
+        label={t.communityCaste}
         name="community"
         value={formData.community}
         onChange={updateField}
-        placeholder="Enter community or caste"
+        placeholder={t.communityCastePlaceholder}
       />
 
       <Field
-        label="Sub-Community"
+        label={t.subCommunity}
         name="subCommunity"
         value={formData.subCommunity}
         onChange={updateField}
-        placeholder="Enter sub-community if applicable"
+        placeholder={t.subCommunityPlaceholder}
       />
 
       <Field
-        label="Gotra"
+        label={t.gotra}
         name="gotra"
         value={formData.gotra}
         onChange={updateField}
-        placeholder="Enter Gotra"
+        placeholder={t.gotraPlaceholder}
       />
 
       <Field
-        label="Rashi"
+        label={t.rashi}
         name="rashi"
         value={formData.rashi}
         onChange={updateField}
-        placeholder="Example: Mesh / Aries"
+        placeholder={t.rashiPlaceholder}
       />
 
       <Field
-        label="Nakshatra"
+        label={t.nakshatra}
         name="nakshatra"
         value={formData.nakshatra}
         onChange={updateField}
-        placeholder="Enter Nakshatra"
+        placeholder={t.nakshatraPlaceholder}
       />
 
       <SelectField
-        label="Manglik"
+        label={t.manglik}
         name="manglik"
         value={formData.manglik}
         onChange={updateField}
@@ -1223,7 +1617,7 @@ useEffect(() => {
       />
 
       <SelectField
-        label="Horoscope Available"
+        label={t.horoscopeAvailable}
         name="horoscopeAvailable"
         value={formData.horoscopeAvailable}
         onChange={updateField}
@@ -1234,7 +1628,7 @@ useEffect(() => {
 
       <div className="sm:col-span-2">
         <label className="mb-2 block text-sm font-semibold text-slate-800">
-          Additional Traditional Details
+          {t.additionalTraditionalDetails}
         </label>
 
         <textarea
@@ -1242,7 +1636,7 @@ useEffect(() => {
           value={formData.traditionalDetails}
           onChange={updateField}
           rows={4}
-          placeholder="Add any other traditional, horoscope or family details you want to include..."
+          placeholder={t.additionalTraditionalDetailsPlaceholder}
           className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
         />
       </div>
@@ -1275,66 +1669,66 @@ useEffect(() => {
     </p>
 
     <h2 className="mt-1 text-2xl font-bold text-slate-900">
-      Contact Details
+      {t.contactDetails}
     </h2>
 
     <p className="mt-2 text-sm leading-6 text-slate-500">
-      All contact details are optional. Add only the information you want to
-      show on your biodata.
+      {t.step5Description}
     </p>
 
     <div className="mt-7 grid gap-5 sm:grid-cols-2">
       <Field
-        label="Contact Person"
+        label={t.contactPerson}
         name="contactPerson"
         value={formData.contactPerson}
         onChange={updateField}
-        placeholder="Example: Father, Brother or Self"
+        placeholder={t.contactPersonPlaceholder}
       />
 
       <Field
-        label="Mobile Number"
+        label={t.mobileNumber}
         name="mobileNumber"
         value={formData.mobileNumber}
         onChange={updateField}
-        placeholder="Enter mobile number"
+        placeholder={t.mobileNumberPlaceholder}
+
       />
 
       <Field
-        label="Alternate Number"
+        label={t.alternateNumber}
         name="alternateNumber"
         value={formData.alternateNumber}
         onChange={updateField}
-        placeholder="Enter alternate number"
+        placeholder={t.alternateNumberPlaceholder}
       />
 
       <Field
-        label="Email Address"
+        label={t.emailAddress}
         name="email"
         value={formData.email}
         onChange={updateField}
-        placeholder="example@email.com"
+        placeholder={t.emailAddressPlaceholder}
       />
 
       <Field
-        label="City"
+        label={t.city}
         name="contactCity"
         value={formData.contactCity}
         onChange={updateField}
-        placeholder="Example: Pune"
+        placeholder={t.cityPlaceholder}
       />
 
       <Field
-        label="State"
+        label={t.state}
         name="contactState"
         value={formData.contactState}
         onChange={updateField}
-        placeholder="Example: Maharashtra"
+        placeholder={t.statePlaceholder}
       />
 
       <div className="sm:col-span-2">
         <label className="mb-2 block text-sm font-semibold text-slate-800">
-          Full Address
+          {t.fullAddress}
         </label>
 
         <textarea
@@ -1342,7 +1736,7 @@ useEffect(() => {
           value={formData.address}
           onChange={updateField}
           rows={4}
-          placeholder="Enter address you want to show on the biodata..."
+          placeholder={t.fullAddressPlaceholder}
           className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
         />
       </div>
@@ -1367,105 +1761,270 @@ useEffect(() => {
     </div>
   </section>
 )}
+
 {currentStep === 6 && (
   <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
     <p className="text-sm font-bold text-orange-600">
       STEP 6 OF 6
     </p>
 
-    <h2 className="mt-1 text-2xl font-bold text-slate-900">
-      Design Your Biodata
+    <h2 className="mt-1 text-2xl font-bold text-slate-900 sm:text-3xl">
+      Choose Template
     </h2>
 
     <p className="mt-2 text-sm leading-6 text-slate-500">
-      Your details are ready. Now choose a design and preview your complete
-      marriage biodata.
+      Select a design you like. You can preview and customize it before
+      downloading your biodata.
     </p>
 
-    <div className="mt-7 rounded-2xl border border-orange-100 bg-orange-50 p-5">
-      <p className="font-bold text-slate-900">
-        🎉 Your biodata details are ready!
-      </p>
-
-      <p className="mt-1 text-sm leading-6 text-slate-600">
-        Choose your favourite template below. All templates and downloads are
-        completely free.
-      </p>
+    {/* Template Filters */}
+    <div className="mt-6 flex gap-2 overflow-x-auto pb-2">
+      {["All", "Traditional", "Modern", "Elegant", "Simple"].map(
+        (category) => (
+          <button
+            key={category}
+            type="button"
+            className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${
+              category === "All"
+                ? "bg-orange-500 text-white"
+                : "border border-slate-200 bg-slate-50 text-slate-600 hover:border-orange-300"
+            }`}
+          >
+            {category}
+          </button>
+        )
+      )}
     </div>
 
-    <div className="mt-8">
-      <h3 className="text-lg font-bold text-slate-900">
-        Choose a Template
-      </h3>
-
-      <p className="mt-1 text-sm text-slate-500">
-        More free designs will be added over time.
-      </p>
-
-      <div className="mt-5 grid gap-4 sm:grid-cols-2">
-        <button
-          type="button"
-          className="rounded-2xl border-2 border-orange-500 bg-orange-50 p-4 text-left"
-        >
-          <div className="flex h-44 items-center justify-center rounded-xl border border-orange-100 bg-white">
-            <div className="text-center">
-              <div className="text-3xl">ॐ</div>
-              <p className="mt-3 font-bold text-slate-900">
-                {formData.fullName || "Your Name"}
-              </p>
-              <p className="mt-1 text-xs text-slate-400">
-                Marriage Biodata
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-4 flex items-center justify-between">
-            <div>
-              <p className="font-bold text-slate-900">
-                Classic Orange
-              </p>
-              <p className="text-xs text-slate-500">
-                Simple & traditional
-              </p>
-            </div>
-
-            <span className="rounded-full bg-orange-500 px-3 py-1 text-xs font-bold text-white">
-              Selected
-            </span>
-          </div>
-        </button>
-
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-4">
-          <div className="flex h-44 items-center justify-center rounded-xl bg-white">
-            <div className="text-center">
-              <p className="text-3xl">✨</p>
-              <p className="mt-2 text-sm font-semibold text-slate-600">
-                More Designs
-              </p>
-              <p className="mt-1 text-xs text-slate-400">
-                Coming soon
-              </p>
-            </div>
+    {/* Template Gallery */}
+    <div className="mt-6 grid grid-cols-2 gap-4 sm:gap-6">
+      
+      {/* H-01 */}
+      <button
+  type="button"
+  onClick={() => setSelectedTemplate("H-01")}
+  className={`group rounded-2xl border-2 p-3 text-left transition hover:shadow-md ${
+    selectedTemplate === "H-01"
+      ? "border-orange-500 bg-orange-50"
+      : "border-slate-200 bg-white hover:border-orange-300"
+  }`}
+>
+        <div className="flex aspect-[3/4] items-center justify-center rounded-xl border border-orange-200 bg-[#fff8e8]">
+          <div className="text-center">
+            <div className="text-3xl">ॐ</div>
+            <p className="mt-3 font-bold text-[#7f1d1d]">
+              {formData.fullName || "Your Name"}
+            </p>
+            <p className="mt-1 text-xs text-slate-500">
+              Marriage Biodata
+            </p>
           </div>
         </div>
-      </div>
+
+     <div className="mt-3">
+  <p className="font-bold text-slate-900">H-01</p>
+  <p className="text-sm text-slate-500">Traditional</p>
+
+  {selectedTemplate === "H-01" && (
+   <div className="group/preview mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-center text-sm font-bold text-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-orange-600 hover:shadow-lg">
+  <span>Preview Template</span>
+
+  <span className="transition-transform duration-300 group-hover/preview:translate-x-1.5">
+    →
+  </span>
+</div>
+  )}
+</div>
+      </button>
+
+      {/* H-02 */}
+      <button
+  type="button"
+  onClick={() => setSelectedTemplate("H-02")}
+  className={`group rounded-2xl border-2 p-3 text-left transition hover:shadow-md ${
+    selectedTemplate === "H-02"
+      ? "border-orange-500 bg-orange-50"
+      : "border-slate-200 bg-white hover:border-orange-300"
+  }`}
+>
+        <div className="flex aspect-[3/4] items-center justify-center rounded-xl border border-green-200 bg-green-50">
+          <div className="text-center">
+            <p className="font-bold text-green-900">
+              {formData.fullName || "Your Name"}
+            </p>
+            <p className="mt-1 text-xs text-green-700">
+              Marriage Biodata
+            </p>
+          </div>
+        </div>
+
+       <div className="mt-3">
+  <p className="font-bold text-slate-900">H-02</p>
+  <p className="text-sm text-slate-500">Modern</p>
+
+  {selectedTemplate === "H-02" && (
+    <div className="group/preview mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-center text-sm font-bold text-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-orange-600 hover:shadow-lg">
+      <span>Preview Template</span>
+
+      <span className="transition-transform duration-300 group-hover/preview:translate-x-1.5">
+        →
+      </span>
+    </div>
+  )}
+</div>
+      </button>
+
+      {/* H-03 */}
+     {/* H-03 */}
+<button
+  type="button"
+  onClick={() => setSelectedTemplate("H-03")}
+  className={`group rounded-2xl border-2 p-3 text-left transition hover:shadow-md ${
+    selectedTemplate === "H-03"
+      ? "border-orange-500 bg-orange-50"
+      : "border-slate-200 bg-white hover:border-orange-300"
+  }`}
+>
+        <div className="flex aspect-[3/4] items-center justify-center rounded-xl border border-amber-200 bg-amber-50">
+          <div className="text-center">
+            <div className="text-3xl">ॐ</div>
+            <p className="mt-3 font-bold text-amber-900">
+              {formData.fullName || "Your Name"}
+            </p>
+          </div>
+        </div>
+
+       <div className="mt-3">
+  <p className="font-bold text-slate-900">H-03</p>
+  <p className="text-sm text-slate-500">Ganesh Theme</p>
+
+  {selectedTemplate === "H-03" && (
+    <div className="group/preview mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-center text-sm font-bold text-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-orange-600 hover:shadow-lg">
+      <span>Preview Template</span>
+
+      <span className="transition-transform duration-300 group-hover/preview:translate-x-1.5">
+        →
+      </span>
+    </div>
+  )}
+</div>
+      </button>
+
+      {/* H-04 */}
+     {/* H-04 */}
+<button
+  type="button"
+  onClick={() => setSelectedTemplate("H-04")}
+  className={`group rounded-2xl border-2 p-3 text-left transition hover:shadow-md ${
+    selectedTemplate === "H-04"
+      ? "border-orange-500 bg-orange-50"
+      : "border-slate-200 bg-white hover:border-orange-300"
+  }`}
+>
+        <div className="flex aspect-[3/4] items-center justify-center rounded-xl border border-orange-200 bg-orange-100">
+          <div className="text-center">
+            <p className="text-3xl">🚩</p>
+            <p className="mt-3 font-bold text-orange-950">
+              {formData.fullName || "Your Name"}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-3">
+  <p className="font-bold text-slate-900">H-04</p>
+  <p className="text-sm text-slate-500">Shivaji Maharaj</p>
+
+  {selectedTemplate === "H-04" && (
+    <div className="group/preview mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-center text-sm font-bold text-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-orange-600 hover:shadow-lg">
+      <span>Preview Template</span>
+
+      <span className="transition-transform duration-300 group-hover/preview:translate-x-1.5">
+        →
+      </span>
+    </div>
+  )}
+</div>
+      </button>
+
+      {/* H-05 */}
+    {/* H-05 */}
+<button
+  type="button"
+  onClick={() => setSelectedTemplate("H-05")}
+  className={`group rounded-2xl border-2 p-3 text-left transition hover:shadow-md ${
+    selectedTemplate === "H-05"
+      ? "border-orange-500 bg-orange-50"
+      : "border-slate-200 bg-white hover:border-orange-300"
+  }`}
+>
+        <div className="flex aspect-[3/4] items-center justify-center rounded-xl border-2 border-double border-amber-300 bg-[#fffdf7]">
+          <div className="text-center">
+            <p className="font-bold text-slate-900">
+              {formData.fullName || "Your Name"}
+            </p>
+            <p className="mt-1 text-xs text-slate-500">
+              Marriage Biodata
+            </p>
+          </div>
+        </div>
+
+      <div className="mt-3">
+  <p className="font-bold text-slate-900">H-05</p>
+  <p className="text-sm text-slate-500">Elegant Border</p>
+
+  {selectedTemplate === "H-05" && (
+    <div className="group/preview mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-center text-sm font-bold text-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-orange-600 hover:shadow-lg">
+      <span>Preview Template</span>
+
+      <span className="transition-transform duration-300 group-hover/preview:translate-x-1.5">
+        →
+      </span>
+    </div>
+  )}
+</div>
+      </button>
+
+      {/* H-06 */}
+     {/* H-06 */}
+<button
+  type="button"
+  onClick={() => setSelectedTemplate("H-06")}
+  className={`group rounded-2xl border-2 p-3 text-left transition hover:shadow-md ${
+    selectedTemplate === "H-06"
+      ? "border-orange-500 bg-orange-50"
+      : "border-slate-200 bg-white hover:border-orange-300"
+  }`}
+>
+        <div className="flex aspect-[3/4] items-center justify-center rounded-xl border border-slate-200 bg-[#fffdf7]">
+          <div className="text-center">
+            <p className="font-bold text-[#172554]">
+              {formData.fullName || "Your Name"}
+            </p>
+            <div className="mx-auto mt-2 h-px w-16 bg-amber-400" />
+            <p className="mt-2 text-xs text-slate-500">
+              Marriage Biodata
+            </p>
+          </div>
+        </div>
+
+    <div className="mt-3">
+  <p className="font-bold text-slate-900">H-06</p>
+  <p className="text-sm text-slate-500">Minimal</p>
+
+  {selectedTemplate === "H-06" && (
+    <div className="group/preview mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-center text-sm font-bold text-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-orange-600 hover:shadow-lg">
+      <span>Preview Template</span>
+
+      <span className="transition-transform duration-300 group-hover/preview:translate-x-1.5">
+        →
+      </span>
+    </div>
+  )}
+</div>
+      </button>
     </div>
 
-    <div className="mt-10 border-t border-slate-200 pt-8">
-  <h3 className="text-xl font-bold text-slate-900">
-    Biodata Preview
-  </h3>
-
-  <p className="mt-1 mb-5 text-sm text-slate-500">
-    This is how your marriage biodata will look.
-  </p>
-
-  <HinduBiodataPreview
-    fullName={formData.fullName}
-    photo={photo}
-    formData={formData}
-  />
-</div>
+    {/* Bottom Navigation */}
     <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-6">
       <button
         type="button"
@@ -1475,186 +2034,26 @@ useEffect(() => {
         ← Back
       </button>
 
-      <button
-        type="button"
-        className="rounded-xl bg-orange-500 px-7 py-3.5 font-bold text-white transition hover:bg-orange-600"
-      >
-        Preview Biodata →
-      </button>
+     {selectedTemplate ? (
+  <button
+    type="button"
+    className="rounded-xl bg-orange-500 px-7 py-3 font-bold text-white transition hover:bg-orange-600"
+  >
+    Preview {selectedTemplate} →
+  </button>
+) : (
+  <p className="text-sm text-slate-500">
+    Select a template to continue
+  </p>
+)}
     </div>
   </section>
 )}
 
+
+
           </div>
 
-          {/* LIVE PREVIEW */}
-          {currentStep !== 6 && (
-  <aside className="hidden lg:block">
-            <div className="sticky top-28">
-              <div className="mb-3 flex items-center justify-between">
-                <h2 className="font-bold text-slate-900">Live Preview</h2>
-
-                <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
-                  Live
-                </span>
-              </div>
-
-              <div className="overflow-hidden rounded-2xl border border-orange-100 bg-white shadow-lg">
-                <div className="bg-orange-500 px-6 py-7 text-center text-white">
-                  {selectedSymbol.id !== "none" && (
-                    <div className="mb-4">
-                      {selectedSymbol.type === "text" ? (
-                        <div className="whitespace-pre-wrap text-xl font-bold">
-                          {selectedSymbol.value}
-                        </div>
-                      ) : selectedSymbol.image ? (
-                        <img
-                          src={selectedSymbol.image}
-                          alt={selectedSymbol.name}
-                          className="mx-auto h-20 w-20 object-contain"
-                        />
-                      ) : null}
-                    </div>
-                  )}
-
-                  {photo && (
-                    <img
-                      src={photo}
-                      alt="Profile preview"
-                      className="mx-auto mb-4 h-24 w-24 rounded-full border-4 border-white/60 object-cover"
-                    />
-                  )}
-
-                  <h3 className="break-words text-2xl font-bold">
-                    {formData.fullName || "Your Name"}
-                  </h3>
-
-                  <p className="mt-1 text-xs text-orange-100">
-                    Marriage Biodata
-                  </p>
-                </div>
-
-                <div className="space-y-3 p-6 text-sm">
-                  <PreviewRow label="Date of Birth" value={formData.dateOfBirth} />
-                  <PreviewRow label="Time of Birth" value={formData.birthTime} />
-                  <PreviewRow label="Place of Birth" value={formData.birthPlace} />
-                  <PreviewRow label="Gender" value={formData.gender} />
-                  <PreviewRow label="Height" value={formData.height} />
-                  <PreviewRow
-                    label="Marital Status"
-                    value={formData.maritalStatus}
-                  />
-                  <PreviewRow
-                    label="Mother Tongue"
-                    value={formData.motherTongue}
-                  />
-                  <PreviewRow
-                    label="Current City"
-                    value={formData.currentCity}
-                  />
-
-                  {formData.aboutMe && (
-                    <div className="border-t border-slate-100 pt-4">
-                      <p className="mb-2 font-bold text-orange-600">
-                        About Me
-                      </p>
-
-                      <p className="whitespace-pre-wrap break-words leading-6 text-slate-600">
-                        {formData.aboutMe}
-                      </p>
-                    </div>
-                  )}
-                  {/* Education & Career */}
-{(formData.highestQualification ||
-  formData.degreeCourse ||
-  formData.collegeUniversity ||
-  formData.occupation ||
-  formData.companyBusiness ||
-  formData.designation ||
-  formData.workLocation ||
-  formData.annualIncome ||
-  formData.careerDetails) && (
-  <div className="border-t border-slate-100 pt-4">
-    <p className="mb-3 font-bold text-orange-600">
-      Education & Career
-    </p>
-
-    <div className="space-y-3">
-      {formData.highestQualification && (
-        <PreviewRow
-          label="Qualification"
-          value={formData.highestQualification}
-        />
-      )}
-
-      {formData.degreeCourse && (
-        <PreviewRow
-          label="Degree / Course"
-          value={formData.degreeCourse}
-        />
-      )}
-
-      {formData.collegeUniversity && (
-        <PreviewRow
-          label="College / University"
-          value={formData.collegeUniversity}
-        />
-      )}
-
-      {formData.occupation && (
-        <PreviewRow
-          label="Occupation"
-          value={formData.occupation}
-        />
-      )}
-
-      {formData.companyBusiness && (
-        <PreviewRow
-          label="Company / Business"
-          value={formData.companyBusiness}
-        />
-      )}
-
-      {formData.designation && (
-        <PreviewRow
-          label="Designation"
-          value={formData.designation}
-        />
-      )}
-
-      {formData.workLocation && (
-        <PreviewRow
-          label="Work Location"
-          value={formData.workLocation}
-        />
-      )}
-
-      {formData.annualIncome && (
-        <PreviewRow
-          label="Annual Income"
-          value={formData.annualIncome}
-        />
-      )}
-
-      {formData.careerDetails && (
-        <div className="pt-1">
-          <p className="mb-1 font-semibold text-orange-600">
-            Career Details
-          </p>
-          <p className="break-words text-slate-700">
-            {formData.careerDetails}
-          </p>
-        </div>
-      )}
-    </div>
-  </div>
-)}
-                </div>
-              </div>
-            </div>
-           
-         </aside>
-         )}
         </div>
       </div>
 
@@ -1856,11 +2255,12 @@ function SelectField({
       >
         <option value="">{placeholder}</option>
 
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
+    {options.map((option, index) => (
+  <option key={`${name}-${index}`} value={option}>
+    {option}
+  </option>
+))}
+      
       </select>
     </div>
   );
