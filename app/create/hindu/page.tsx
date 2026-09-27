@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import { toJpeg, toPng } from "html-to-image";
+import { jsPDF } from "jspdf";
 import HinduBiodataPreview from "../../../components/biodata/HinduBiodataPreview";
 
 const translations = {
@@ -853,6 +855,8 @@ const [templateZoom, setTemplateZoom] = useState(100);
 
 const [downloadMenuOpen, setDownloadMenuOpen] = useState(false);
 const [showMobileDownload, setShowMobileDownload] = useState(true);
+const biodataTemplateRef = useRef<HTMLDivElement>(null);
+const biodataA4Ref = useRef<HTMLDivElement>(null);
 
   const [language, setLanguage] = useState("en");
   
@@ -929,7 +933,111 @@ useEffect(() => {
     clearTimeout(scrollTimer);
   };
 }, []);
+const downloadBiodata = async (format: "png" | "jpg") => {
+  const element = biodataTemplateRef.current;
 
+  if (!element) {
+    alert("Biodata preview is not ready.");
+    return;
+  }
+
+  const safeName =
+    formData.fullName.trim().replace(/[<>:"/\\|?*\x00-\x1F]/g, "-") ||
+    "Marriage-Biodata";
+
+  const originalTransform = element.style.transform;
+  const originalTransformOrigin = element.style.transformOrigin;
+  const originalWidth = element.style.width;
+  const originalMaxWidth = element.style.maxWidth;
+  const originalMinHeight = element.style.minHeight;
+
+  try {
+    // Temporarily render H-01 exactly like the desktop version.
+    element.classList.add("biodata-export");
+    element.style.transform = "none";
+    element.style.transformOrigin = "top left";
+    element.style.width = "794px";
+    element.style.maxWidth = "794px";
+    element.style.minHeight = "0";
+
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => resolve());
+      });
+    });
+
+    // Capture the COMPLETE biodata first.
+    const fullBiodata = await toPng(element, {
+      cacheBust: true,
+      pixelRatio: 2,
+      width: 794,
+      height: element.scrollHeight,
+    });
+
+    const sourceImage = new Image();
+
+    await new Promise<void>((resolve, reject) => {
+      sourceImage.onload = () => resolve();
+      sourceImage.onerror = () => reject(new Error("Could not load biodata image."));
+      sourceImage.src = fullBiodata;
+    });
+
+    // High-resolution A4 canvas at 300 DPI.
+    const a4Width = 2480;
+    const a4Height = 3508;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = a4Width;
+    canvas.height = a4Height;
+
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error("Could not create download canvas.");
+    }
+
+    // Match H-01's cream background instead of leaving empty/black space.
+    context.fillStyle = templateBgColor;
+    context.fillRect(0, 0, a4Width, a4Height);
+
+    const scale = Math.min(
+      a4Width / sourceImage.width,
+      a4Height / sourceImage.height
+    );
+
+    const drawWidth = sourceImage.width * scale;
+    const drawHeight = sourceImage.height * scale;
+
+    const x = (a4Width - drawWidth) / 2;
+    const y = (a4Height - drawHeight) / 2;
+
+    context.drawImage(sourceImage, x, y, drawWidth, drawHeight);
+
+    const link = document.createElement("a");
+
+    if (format === "png") {
+      link.download = `${safeName}.png`;
+      link.href = canvas.toDataURL("image/png");
+    } else {
+      link.download = `${safeName}.jpg`;
+      link.href = canvas.toDataURL("image/jpeg", 0.95);
+    }
+
+    link.click();
+    setDownloadMenuOpen(false);
+  } catch (error) {
+    console.error("Could not download biodata:", error);
+    alert("Could not download biodata. Please try again.");
+  } finally {
+    // Always restore the normal responsive preview.
+    element.classList.remove("biodata-export");
+    element.style.transform = originalTransform;
+    element.style.transformOrigin = originalTransformOrigin;
+    element.style.width = originalWidth;
+    element.style.maxWidth = originalMaxWidth;
+    element.style.minHeight = originalMinHeight;
+  }
+};
   const selectedSymbol =
     symbols.find((item) => item.id === selectedSymbolId) || symbols[0];
 
@@ -2235,6 +2343,7 @@ placeholder={t.familyLocationPlaceholder}      />
 
 {selectedTemplate === "H-01" && (
   <div
+  ref={biodataTemplateRef}
   className="relative mx-auto mt-6 w-full max-w-3xl overflow-hidden rounded-2xl border-[6px] bg-[#fff8e8] p-3 shadow-lg sm:p-5"
  style={{
   backgroundColor: templateBgColor,
@@ -2942,6 +3051,24 @@ style={{ color: templateTextColor }}>
       </button>
     </div>
 
+    {/* Hidden A4 version used only for downloads */}
+<div
+  className="fixed left-[-10000px] top-0"
+  aria-hidden="true"
+>
+  <div
+    ref={biodataA4Ref}
+    style={{
+      width: "794px",
+      minHeight: "1123px",
+      backgroundColor: templateBgColor,
+      color: templateTextColor,
+    }}
+  >
+    A4 DOWNLOAD TEST
+  </div>
+</div>
+
     {/* Mobile Download Format Sheet */}
     {downloadMenuOpen && (
       <div className="fixed inset-0 z-50 flex items-end bg-black/30 sm:hidden">
@@ -2978,10 +3105,11 @@ style={{ color: templateTextColor }}>
               </span>
             </button>
 
-            <button
-              type="button"
-              className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-4 text-center transition active:scale-95"
-            >
+          <button
+  type="button"
+  onClick={() => downloadBiodata("png")}
+  className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-4 text-center transition active:scale-95"
+>
               <span className="block text-xl font-black text-blue-600">
                 PNG
               </span>
