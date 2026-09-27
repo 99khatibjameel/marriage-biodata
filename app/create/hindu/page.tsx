@@ -844,9 +844,18 @@ contactState: "",
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
-  
+  const [templateEditorOpen, setTemplateEditorOpen] = useState(false);
+
+  const [templateBgColor, setTemplateBgColor] = useState("#fff8e8");
+const [templateTextColor, setTemplateTextColor] = useState("#334155");
+const [templateAccentColor, setTemplateAccentColor] = useState("#7f1d1d");
+const [templateZoom, setTemplateZoom] = useState(100);
+
+const [downloadMenuOpen, setDownloadMenuOpen] = useState(false);
+const [showMobileDownload, setShowMobileDownload] = useState(true);
 
   const [language, setLanguage] = useState("en");
+  
   const t = translations[language as keyof typeof translations];
 
   // Load saved biodata when the page opens
@@ -897,6 +906,29 @@ useEffect(() => {
     console.error("Could not save biodata draft:", error);
   }
 }, [formData, selectedSymbolId, currentStep, isLoaded]);
+
+// Hide mobile download button while scrolling,
+// then show it again shortly after scrolling stops
+useEffect(() => {
+  let scrollTimer: ReturnType<typeof setTimeout>;
+
+  const handleScroll = () => {
+    setShowMobileDownload(false);
+
+    clearTimeout(scrollTimer);
+
+    scrollTimer = setTimeout(() => {
+      setShowMobileDownload(true);
+    }, 500);
+  };
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+    clearTimeout(scrollTimer);
+  };
+}, []);
 
   const selectedSymbol =
     symbols.find((item) => item.id === selectedSymbolId) || symbols[0];
@@ -1762,7 +1794,7 @@ placeholder={t.familyLocationPlaceholder}      />
   </section>
 )}
 
-{currentStep === 6 && (
+{currentStep === 6 && !templateEditorOpen && (
   <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
     <p className="text-sm font-bold text-orange-600">
       STEP 6 OF 6
@@ -1826,7 +1858,10 @@ placeholder={t.familyLocationPlaceholder}      />
   <p className="text-sm text-slate-500">Traditional</p>
 
   {selectedTemplate === "H-01" && (
-   <div className="group/preview mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-center text-sm font-bold text-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-orange-600 hover:shadow-lg">
+   <div onClick={(event) => {
+  event.stopPropagation();
+  setTemplateEditorOpen(true);
+}} className="group/preview mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-center text-sm font-bold text-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-orange-600 hover:shadow-lg">
   <span>Preview Template</span>
 
   <span className="transition-transform duration-300 group-hover/preview:translate-x-1.5">
@@ -2047,6 +2082,947 @@ placeholder={t.familyLocationPlaceholder}      />
   </p>
 )}
     </div>
+  </section>
+)}
+
+
+
+{currentStep === 6 && templateEditorOpen && (
+  <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+    <p className="text-sm font-bold text-orange-600">
+      STEP 6 OF 6
+    </p>
+
+    <h2 className="mt-1 text-2xl font-bold text-slate-900 sm:text-3xl">
+      Template Editor
+    </h2>
+
+    <button
+  type="button"
+  onClick={() => setTemplateEditorOpen(false)}
+  className="mt-5 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+>
+  ← Back to Templates
+</button>
+
+{/* Template Customization Controls */}
+{/* Template Customization Controls */}
+<div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50/70 p-3 sm:p-4">
+
+  {/* Color Controls */}
+  <div className="grid grid-cols-3 gap-2 sm:gap-3">
+
+    <label className="group flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-2 py-3 shadow-sm transition hover:border-orange-300 hover:shadow-md sm:flex-row sm:justify-between sm:px-4">
+      <span className="text-[11px] font-bold text-slate-700 sm:text-sm">
+        Background
+      </span>
+
+      <div className="relative">
+        <div
+          className="h-8 w-8 rounded-full border-2 border-white shadow ring-1 ring-slate-300 sm:h-9 sm:w-9"
+          style={{ backgroundColor: templateBgColor }}
+        />
+        <input
+          type="color"
+          value={templateBgColor}
+          onChange={(event) => setTemplateBgColor(event.target.value)}
+          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+          aria-label="Background color"
+        />
+      </div>
+    </label>
+
+    <label className="group flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-2 py-3 shadow-sm transition hover:border-orange-300 hover:shadow-md sm:flex-row sm:justify-between sm:px-4">
+      <span className="text-[11px] font-bold text-slate-700 sm:text-sm">
+        Text
+      </span>
+
+      <div className="relative">
+        <div
+          className="h-8 w-8 rounded-full border-2 border-white shadow ring-1 ring-slate-300 sm:h-9 sm:w-9"
+          style={{ backgroundColor: templateTextColor }}
+        />
+        <input
+          type="color"
+          value={templateTextColor}
+          onChange={(event) => setTemplateTextColor(event.target.value)}
+          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+          aria-label="Text color"
+        />
+      </div>
+    </label>
+
+    <label className="group flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-2 py-3 shadow-sm transition hover:border-orange-300 hover:shadow-md sm:flex-row sm:justify-between sm:px-4">
+      <span className="text-[11px] font-bold text-slate-700 sm:text-sm">
+        Accent
+      </span>
+
+      <div className="relative">
+        <div
+          className="h-8 w-8 rounded-full border-2 border-white shadow ring-1 ring-slate-300 sm:h-9 sm:w-9"
+          style={{ backgroundColor: templateAccentColor }}
+        />
+        <input
+          type="color"
+          value={templateAccentColor}
+          onChange={(event) => setTemplateAccentColor(event.target.value)}
+          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+          aria-label="Accent color"
+        />
+      </div>
+    </label>
+
+  </div>
+
+  {/* Reset */}
+  <button
+    type="button"
+    onClick={() => {
+      setTemplateBgColor("#fff8e8");
+      setTemplateTextColor("#334155");
+      setTemplateAccentColor("#7f1d1d");
+      setTemplateZoom(100);
+    }}
+    className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-bold text-slate-700 shadow-sm transition hover:border-orange-300 hover:bg-orange-50 sm:text-sm"
+  >
+    <span className="text-base leading-none">↻</span>
+    Reset Design
+  </button>
+
+  {/* Zoom Controls */}
+  <div className="mt-3 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-2.5 shadow-sm sm:px-4">
+    <div>
+      <p className="text-xs font-bold text-slate-700 sm:text-sm">
+        Preview Size
+      </p>
+      <p className="hidden text-xs text-slate-400 sm:block">
+        Adjust template zoom
+      </p>
+    </div>
+
+    <div className="flex items-center gap-2">
+      <button
+        type="button"
+        onClick={() =>
+          setTemplateZoom((current) => Math.max(70, current - 10))
+        }
+        className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-lg font-bold text-slate-700 transition hover:bg-slate-100"
+        aria-label="Zoom out"
+      >
+        −
+      </button>
+
+      <div className="min-w-[54px] text-center">
+        <span className="text-sm font-extrabold text-slate-900">
+          {templateZoom}%
+        </span>
+      </div>
+
+      <button
+        type="button"
+        onClick={() =>
+          setTemplateZoom((current) => Math.min(130, current + 10))
+        }
+        className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-lg font-bold text-slate-700 transition hover:bg-slate-100"
+        aria-label="Zoom in"
+      >
+        +
+      </button>
+    </div>
+  </div>
+
+</div>
+
+{selectedTemplate === "H-01" && (
+  <div
+  className="relative mx-auto mt-6 w-full max-w-3xl overflow-hidden rounded-2xl border-[6px] bg-[#fff8e8] p-3 shadow-lg sm:p-5"
+ style={{
+  backgroundColor: templateBgColor,
+  backgroundImage: `
+    radial-gradient(circle at 15% 10%, rgba(127, 29, 29, 0.045), transparent 22%),
+    radial-gradient(circle at 85% 90%, rgba(127, 29, 29, 0.045), transparent 22%),
+    linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.12))
+  `,
+  color: templateTextColor,
+  borderColor: templateAccentColor,
+  transform: `scale(${templateZoom / 100})`,
+  transformOrigin: "top center",
+}}
+>
+    {/* H-01 Decorative Inner Frame */}
+  <div
+    className="pointer-events-none absolute inset-2 rounded-xl border sm:inset-3"
+    style={{ borderColor: templateAccentColor }}
+  />
+
+  {/* H-01 Traditional Corner Decorations */}
+<div
+  className="pointer-events-none absolute left-3 top-3 text-xl leading-none sm:left-4 sm:top-4 sm:text-2xl"
+  style={{ color: templateAccentColor }}
+>
+  ❧
+</div>
+
+<div
+  className="pointer-events-none absolute right-3 top-3 rotate-90 text-xl leading-none sm:right-4 sm:top-4 sm:text-2xl"
+  style={{ color: templateAccentColor }}
+>
+  ❧
+</div>
+
+<div
+  className="pointer-events-none absolute bottom-3 left-3 -rotate-90 text-xl leading-none sm:bottom-4 sm:left-4 sm:text-2xl"
+  style={{ color: templateAccentColor }}
+>
+  ❧
+</div>
+
+<div
+  className="pointer-events-none absolute bottom-3 right-3 rotate-180 text-xl leading-none sm:bottom-4 sm:right-4 sm:text-2xl"
+  style={{ color: templateAccentColor }}
+>
+  ❧
+</div>
+  {/* H-01 Header */}
+
+  
+  
+<div className="border-b border-[#d8b98b] pb-5 text-center">
+
+  
+{selectedSymbolId !== "none" && (
+  <div className="mb-4 flex justify-center">
+    {selectedSymbol.type === "image" && selectedSymbol.image ? (
+      <img
+        src={selectedSymbol.image}
+        alt={selectedSymbol.name}
+        className="h-14 w-14 object-contain sm:h-16 sm:w-16"
+      />
+    ) : selectedSymbol.type === "text" && selectedSymbol.value ? (
+      <span className="text-4xl text-[#7f1d1d]">
+        {selectedSymbol.value}
+      </span>
+    ) : null}
+  </div>
+)}
+<div className="flex items-center justify-center gap-3">
+  <div
+    className="h-px w-8 sm:w-12"
+    style={{ backgroundColor: templateAccentColor }}
+  />
+
+  <p
+    className="text-xs font-bold uppercase tracking-[0.25em] sm:text-sm"
+    style={{ color: templateAccentColor }}
+  >
+    {language === "mr"
+      ? "विवाह परिचय"
+      : language === "hi"
+        ? "विवाह परिचय"
+        : language === "gu"
+          ? "લગ્ન પરિચય"
+          : "Marriage Biodata"}
+  </p>
+
+  <div
+    className="h-px w-8 sm:w-12"
+    style={{ backgroundColor: templateAccentColor }}
+  />
+</div>
+
+ {photo && (
+  <div className="mt-4 flex justify-center">
+    <div
+      className="rounded-full border-2 p-1 shadow-sm"
+      style={{ borderColor: templateAccentColor }}
+    >
+      <img
+        src={photo}
+        alt={formData.fullName || "Biodata"}
+        className="h-28 w-28 rounded-full object-cover sm:h-32 sm:w-32"
+      />
+    </div>
+  </div>
+)}
+
+<h2
+  className="mt-3 break-words text-2xl font-bold sm:text-3xl"
+  style={{ color: templateAccentColor }}
+>
+  {formData.fullName}
+</h2>
+</div>
+
+
+    {/* Personal Details */}
+    {(formData.dateOfBirth ||
+      formData.birthTime ||
+      formData.birthPlace ||
+      formData.gender ||
+      formData.height ||
+      formData.maritalStatus ||
+      formData.motherTongue ||
+      formData.currentCity ||
+      formData.aboutMe) && (
+      <div
+  className="border-b py-5"
+  style={{ borderColor: templateAccentColor }}
+>
+       <div className="mb-4 flex items-center gap-3">
+  <h3
+    className="shrink-0 rounded-r-full px-4 py-1.5 text-sm font-bold text-white sm:text-base"
+    style={{ backgroundColor: templateAccentColor }}
+  >
+    {t.personalDetails}
+  </h3>
+
+  <div
+    className="h-px flex-1"
+    style={{ backgroundColor: templateAccentColor }}
+  />
+</div>
+
+        <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+          {formData.dateOfBirth && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.dateOfBirth}:</span>{" "}
+              {formData.dateOfBirth}
+            </p>
+          )}
+
+          {formData.birthTime && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.timeOfBirth}:</span>{" "}
+              {formData.birthTime}
+            </p>
+          )}
+
+          {formData.birthPlace && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.placeOfBirth}:</span>{" "}
+              {formData.birthPlace}
+            </p>
+          )}
+
+          {formData.gender && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.gender}:</span>{" "}
+              {formData.gender}
+            </p>
+          )}
+
+          {formData.height && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.height}:</span>{" "}
+              {formData.height}
+            </p>
+          )}
+
+          {formData.maritalStatus && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.maritalStatus}:</span>{" "}
+              {formData.maritalStatus}
+            </p>
+          )}
+
+          {formData.motherTongue && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.motherTongue}:</span>{" "}
+              {formData.motherTongue}
+            </p>
+          )}
+
+          {formData.currentCity && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.currentCity}:</span>{" "}
+              {formData.currentCity}
+            </p>
+          )}
+        </div>
+
+        {formData.aboutMe && (
+          <p className="mt-4 whitespace-pre-line text-sm leading-6"
+style={{ color: templateTextColor }}>
+            <span className="font-semibold">{t.aboutMe}:</span>{" "}
+            {formData.aboutMe}
+          </p>
+        )}
+      </div>
+    )}
+
+    {/* Education & Career */}
+    {(formData.highestQualification ||
+      formData.degreeCourse ||
+      formData.collegeUniversity ||
+      formData.occupation ||
+      formData.companyBusiness ||
+      formData.designation ||
+      formData.workLocation ||
+      formData.annualIncome ||
+      formData.careerDetails) && (
+      <div
+  className="border-b py-5"
+  style={{ borderColor: templateAccentColor }}
+>
+       <div className="mb-4 flex items-center gap-3">
+  <h3
+    className="shrink-0 rounded-r-full px-4 py-1.5 text-sm font-bold text-white sm:text-base"
+    style={{ backgroundColor: templateAccentColor }}
+  >
+    {t.educationCareer}
+  </h3>
+
+  <div
+    className="h-px flex-1"
+    style={{ backgroundColor: templateAccentColor }}
+  />
+</div>
+
+        <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+          {formData.highestQualification && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.highestQualification}:</span>{" "}
+              {formData.highestQualification}
+            </p>
+          )}
+
+          {formData.degreeCourse && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.degreeCourse}:</span>{" "}
+              {formData.degreeCourse}
+            </p>
+          )}
+
+          {formData.collegeUniversity && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.collegeUniversity}:</span>{" "}
+              {formData.collegeUniversity}
+            </p>
+          )}
+
+          {formData.occupation && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.occupation}:</span>{" "}
+              {formData.occupation}
+            </p>
+          )}
+
+          {formData.companyBusiness && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.companyBusiness}:</span>{" "}
+              {formData.companyBusiness}
+            </p>
+          )}
+
+          {formData.designation && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.designation}:</span>{" "}
+              {formData.designation}
+            </p>
+          )}
+
+          {formData.workLocation && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.workLocation}:</span>{" "}
+              {formData.workLocation}
+            </p>
+          )}
+
+          {formData.annualIncome && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.annualIncome}:</span>{" "}
+              {formData.annualIncome}
+            </p>
+          )}
+        </div>
+
+        {formData.careerDetails && (
+          <p className="mt-4 whitespace-pre-line text-sm leading-6"
+style={{ color: templateTextColor }}>
+            <span className="font-semibold">{t.additionalCareerDetails}:</span>{" "}
+            {formData.careerDetails}
+          </p>
+        )}
+      </div>
+    )}
+
+    {/* Family Details */}
+    {(formData.fatherName ||
+      formData.fatherOccupation ||
+      formData.motherName ||
+      formData.motherOccupation ||
+      formData.brothers ||
+      formData.sisters ||
+      formData.familyType ||
+      formData.familyLocation ||
+      formData.familyDetails) && (
+      <div
+  className="border-b py-5"
+  style={{ borderColor: templateAccentColor }}
+>
+  <div className="mb-4 flex items-center gap-3">
+    <h3
+      className="shrink-0 rounded-r-full px-4 py-1.5 text-sm font-bold text-white sm:text-base"
+      style={{ backgroundColor: templateAccentColor }}
+    >
+      {t.familyDetails}
+    </h3>
+
+    <div
+      className="h-px flex-1"
+      style={{ backgroundColor: templateAccentColor }}
+    />
+  </div>
+
+  <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+          {formData.fatherName && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.fatherName}:</span>{" "}
+              {formData.fatherName}
+            </p>
+          )}
+
+          {formData.fatherOccupation && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.fatherOccupation}:</span>{" "}
+              {formData.fatherOccupation}
+            </p>
+          )}
+
+          {formData.motherName && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.motherName}:</span>{" "}
+              {formData.motherName}
+            </p>
+          )}
+
+          {formData.motherOccupation && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.motherOccupation}:</span>{" "}
+              {formData.motherOccupation}
+            </p>
+          )}
+
+          {formData.brothers && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.brothers}:</span>{" "}
+              {formData.brothers}
+            </p>
+          )}
+
+          {formData.sisters && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.sisters}:</span>{" "}
+              {formData.sisters}
+            </p>
+          )}
+
+          {formData.familyType && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.familyType}:</span>{" "}
+              {formData.familyType}
+            </p>
+          )}
+
+          {formData.familyLocation && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.familyLocation}:</span>{" "}
+              {formData.familyLocation}
+            </p>
+          )}
+        </div>
+
+        {formData.familyDetails && (
+          <p className="mt-4 whitespace-pre-line text-sm leading-6"
+style={{ color: templateTextColor }}>
+            <span className="font-semibold">{t.additionalFamilyDetails}:</span>{" "}
+            {formData.familyDetails}
+          </p>
+        )}
+      </div>
+    )}
+
+    {/* Traditional Details */}
+    {(formData.community ||
+      formData.subCommunity ||
+      formData.gotra ||
+      formData.rashi ||
+      formData.nakshatra ||
+      formData.manglik ||
+      formData.horoscopeAvailable ||
+      formData.traditionalDetails) && (
+      <div
+  className="border-b py-5"
+  style={{ borderColor: templateAccentColor }}
+>
+  <div className="mb-4 flex items-center gap-3">
+    <h3
+      className="shrink-0 rounded-r-full px-4 py-1.5 text-sm font-bold text-white sm:text-base"
+      style={{ backgroundColor: templateAccentColor }}
+    >
+      {t.traditionalDetails}
+    </h3>
+
+    <div
+      className="h-px flex-1"
+      style={{ backgroundColor: templateAccentColor }}
+    />
+  </div>
+
+  <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+          {formData.community && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.communityCaste}:</span>{" "}
+              {formData.community}
+            </p>
+          )}
+
+          {formData.subCommunity && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.subCommunity}:</span>{" "}
+              {formData.subCommunity}
+            </p>
+          )}
+
+          {formData.gotra && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.gotra}:</span>{" "}
+              {formData.gotra}
+            </p>
+          )}
+
+          {formData.rashi && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.rashi}:</span>{" "}
+              {formData.rashi}
+            </p>
+          )}
+
+          {formData.nakshatra && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.nakshatra}:</span>{" "}
+              {formData.nakshatra}
+            </p>
+          )}
+
+          {formData.manglik && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.manglik}:</span>{" "}
+              {formData.manglik}
+            </p>
+          )}
+
+          {formData.horoscopeAvailable && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.horoscopeAvailable}:</span>{" "}
+              {formData.horoscopeAvailable}
+            </p>
+          )}
+        </div>
+
+        {formData.traditionalDetails && (
+          <p className="mt-4 whitespace-pre-line text-sm leading-6"
+style={{ color: templateTextColor }}>
+            <span className="font-semibold">
+              {t.additionalTraditionalDetails}:
+            </span>{" "}
+            {formData.traditionalDetails}
+          </p>
+        )}
+      </div>
+    )}
+
+    {/* Contact Details */}
+    {(formData.contactPerson ||
+      formData.mobileNumber ||
+      formData.alternateNumber ||
+      formData.email ||
+      formData.address ||
+      formData.contactCity ||
+      formData.contactState) && (
+      <div className="py-5">
+  <div className="mb-4 flex items-center gap-3">
+    <h3
+      className="shrink-0 rounded-r-full px-4 py-1.5 text-sm font-bold text-white sm:text-base"
+      style={{ backgroundColor: templateAccentColor }}
+    >
+      {t.contactDetails}
+    </h3>
+
+    <div
+      className="h-px flex-1"
+      style={{ backgroundColor: templateAccentColor }}
+    />
+  </div>
+
+  <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+          {formData.contactPerson && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.contactPerson}:</span>{" "}
+              {formData.contactPerson}
+            </p>
+          )}
+
+          {formData.mobileNumber && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.mobileNumber}:</span>{" "}
+              {formData.mobileNumber}
+            </p>
+          )}
+
+          {formData.alternateNumber && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.alternateNumber}:</span>{" "}
+              {formData.alternateNumber}
+            </p>
+          )}
+
+          {formData.email && (
+            <p
+  className="break-all text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.emailAddress}:</span>{" "}
+              {formData.email}
+            </p>
+          )}
+
+          {formData.contactCity && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.city}:</span>{" "}
+              {formData.contactCity}
+            </p>
+          )}
+
+          {formData.contactState && (
+            <p
+  className="text-sm"
+  style={{ color: templateTextColor }}
+>
+              <span className="font-semibold">{t.state}:</span>{" "}
+              {formData.contactState}
+            </p>
+          )}
+        </div>
+
+        {formData.address && (
+          <p className="mt-4 whitespace-pre-line text-sm leading-6"
+style={{ color: templateTextColor }}>
+            <span className="font-semibold">{t.fullAddress}:</span>{" "}
+            {formData.address}
+          </p>
+        )}
+      </div>
+    )}
+  </div>
+)}
+
+{/* Mobile Download Button */}
+{selectedTemplate && (
+  <>
+    <div
+      className={`fixed bottom-4 left-1/2 z-40 w-[calc(100%-32px)] max-w-sm -translate-x-1/2 transition-all duration-300 sm:hidden ${
+        showMobileDownload && !downloadMenuOpen
+          ? "translate-y-0 opacity-100"
+          : "pointer-events-none translate-y-20 opacity-0"
+      }`}
+    >
+      <button
+        type="button"
+        onClick={() => setDownloadMenuOpen(true)}
+        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-orange-500 px-5 py-3.5 text-sm font-bold text-white shadow-lg transition active:scale-[0.98]"
+      >
+        <span className="text-lg">↓</span>
+        Download Biodata
+      </button>
+    </div>
+
+    {/* Mobile Download Format Sheet */}
+    {downloadMenuOpen && (
+      <div className="fixed inset-0 z-50 flex items-end bg-black/30 sm:hidden">
+        <button
+          type="button"
+          aria-label="Close download menu"
+          onClick={() => setDownloadMenuOpen(false)}
+          className="absolute inset-0"
+        />
+
+        <div className="relative z-10 w-full rounded-t-3xl bg-white px-5 pb-6 pt-4 shadow-2xl">
+          <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-slate-300" />
+
+          <div className="text-center">
+            <h3 className="text-lg font-bold text-slate-900">
+              Download Biodata
+            </h3>
+
+            <p className="mt-1 text-xs text-slate-500">
+              Choose your preferred format
+            </p>
+          </div>
+
+          <div className="mt-5 grid grid-cols-3 gap-3">
+            <button
+              type="button"
+              className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-4 text-center transition active:scale-95"
+            >
+              <span className="block text-xl font-black text-red-600">
+                PDF
+              </span>
+              <span className="mt-1 block text-[11px] font-semibold text-slate-500">
+                Document
+              </span>
+            </button>
+
+            <button
+              type="button"
+              className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-4 text-center transition active:scale-95"
+            >
+              <span className="block text-xl font-black text-blue-600">
+                PNG
+              </span>
+              <span className="mt-1 block text-[11px] font-semibold text-slate-500">
+                Image
+              </span>
+            </button>
+
+            <button
+              type="button"
+              className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-4 text-center transition active:scale-95"
+            >
+              <span className="block text-xl font-black text-emerald-600">
+                JPG
+              </span>
+              <span className="mt-1 block text-[11px] font-semibold text-slate-500">
+                Image
+              </span>
+            </button>
+          </div>
+
+          <div className="mt-4 text-center text-xs font-semibold text-green-600">
+            ✓ 100% Free
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setDownloadMenuOpen(false)}
+            className="mt-4 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    )}
+  </>
+)}
+
+    <p className="mt-2 text-sm leading-6 text-slate-500">
+      Customize and preview your selected biodata template.
+    </p>
   </section>
 )}
 
