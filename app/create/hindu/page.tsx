@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { toJpeg, toPng } from "html-to-image";
 import { jsPDF } from "jspdf";
+import H01Template from "../../../components/biodata/H01Template";
 import HinduBiodataPreview from "../../../components/biodata/HinduBiodataPreview";
 
 const translations = {
@@ -934,10 +935,10 @@ useEffect(() => {
   };
 }, []);
 const downloadBiodata = async (format: "png" | "jpg") => {
-  const element = biodataTemplateRef.current;
+  const element = biodataA4Ref.current;
 
   if (!element) {
-    alert("Biodata preview is not ready.");
+    alert("Biodata is not ready.");
     return;
   }
 
@@ -945,20 +946,11 @@ const downloadBiodata = async (format: "png" | "jpg") => {
     formData.fullName.trim().replace(/[<>:"/\\|?*\x00-\x1F]/g, "-") ||
     "Marriage-Biodata";
 
-  const originalTransform = element.style.transform;
-  const originalTransformOrigin = element.style.transformOrigin;
-  const originalWidth = element.style.width;
-  const originalMaxWidth = element.style.maxWidth;
-  const originalMinHeight = element.style.minHeight;
-
   try {
-    // Temporarily render H-01 exactly like the desktop version.
-    element.classList.add("biodata-export");
-    element.style.transform = "none";
-    element.style.transformOrigin = "top left";
-    element.style.width = "794px";
-    element.style.maxWidth = "794px";
-    element.style.minHeight = "0";
+    // Allow fonts, images and the hidden A4 template to finish rendering.
+    if (document.fonts?.ready) {
+      await document.fonts.ready;
+    }
 
     await new Promise<void>((resolve) => {
       requestAnimationFrame(() => {
@@ -966,29 +958,28 @@ const downloadBiodata = async (format: "png" | "jpg") => {
       });
     });
 
-    // Capture the COMPLETE biodata first.
-    const fullBiodata = await toPng(element, {
+    // Capture the dedicated A4 template directly.
+    const dataUrl = await toPng(element, {
       cacheBust: true,
-      pixelRatio: 2,
+      pixelRatio: 3.125,
       width: 794,
-      height: element.scrollHeight,
+      height: 1123,
+      backgroundColor: templateBgColor,
     });
 
     const sourceImage = new Image();
 
     await new Promise<void>((resolve, reject) => {
       sourceImage.onload = () => resolve();
-      sourceImage.onerror = () => reject(new Error("Could not load biodata image."));
-      sourceImage.src = fullBiodata;
+      sourceImage.onerror = () =>
+        reject(new Error("Could not load A4 biodata image."));
+      sourceImage.src = dataUrl;
     });
 
-    // High-resolution A4 canvas at 300 DPI.
-    const a4Width = 2480;
-    const a4Height = 3508;
-
+    // Final A4 image: approximately 300 DPI.
     const canvas = document.createElement("canvas");
-    canvas.width = a4Width;
-    canvas.height = a4Height;
+    canvas.width = 2480;
+    canvas.height = 3508;
 
     const context = canvas.getContext("2d");
 
@@ -996,22 +987,16 @@ const downloadBiodata = async (format: "png" | "jpg") => {
       throw new Error("Could not create download canvas.");
     }
 
-    // Match H-01's cream background instead of leaving empty/black space.
     context.fillStyle = templateBgColor;
-    context.fillRect(0, 0, a4Width, a4Height);
+    context.fillRect(0, 0, canvas.width, canvas.height);
 
-    const scale = Math.min(
-      a4Width / sourceImage.width,
-      a4Height / sourceImage.height
+    context.drawImage(
+      sourceImage,
+      0,
+      0,
+      canvas.width,
+      canvas.height
     );
-
-    const drawWidth = sourceImage.width * scale;
-    const drawHeight = sourceImage.height * scale;
-
-    const x = (a4Width - drawWidth) / 2;
-    const y = (a4Height - drawHeight) / 2;
-
-    context.drawImage(sourceImage, x, y, drawWidth, drawHeight);
 
     const link = document.createElement("a");
 
@@ -1028,14 +1013,6 @@ const downloadBiodata = async (format: "png" | "jpg") => {
   } catch (error) {
     console.error("Could not download biodata:", error);
     alert("Could not download biodata. Please try again.");
-  } finally {
-    // Always restore the normal responsive preview.
-    element.classList.remove("biodata-export");
-    element.style.transform = originalTransform;
-    element.style.transformOrigin = originalTransformOrigin;
-    element.style.width = originalWidth;
-    element.style.maxWidth = originalMaxWidth;
-    element.style.minHeight = originalMinHeight;
   }
 };
   const selectedSymbol =
@@ -2340,694 +2317,26 @@ placeholder={t.familyLocationPlaceholder}      />
   </div>
 
 </div>
-
 {selectedTemplate === "H-01" && (
   <div
-  ref={biodataTemplateRef}
-  className="relative mx-auto mt-6 w-full max-w-3xl overflow-hidden rounded-2xl border-[6px] bg-[#fff8e8] p-3 shadow-lg sm:p-5"
- style={{
-  backgroundColor: templateBgColor,
-  backgroundImage: `
-    radial-gradient(circle at 15% 10%, rgba(127, 29, 29, 0.045), transparent 22%),
-    radial-gradient(circle at 85% 90%, rgba(127, 29, 29, 0.045), transparent 22%),
-    linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.12))
-  `,
-  color: templateTextColor,
-  borderColor: templateAccentColor,
-  transform: `scale(${templateZoom / 100})`,
-  transformOrigin: "top center",
-}}
->
-    {/* H-01 Decorative Inner Frame */}
-  <div
-    className="pointer-events-none absolute inset-2 rounded-xl border sm:inset-3"
-    style={{ borderColor: templateAccentColor }}
-  />
-
-  {/* H-01 Traditional Corner Decorations */}
-<div
-  className="pointer-events-none absolute left-3 top-3 text-xl leading-none sm:left-4 sm:top-4 sm:text-2xl"
-  style={{ color: templateAccentColor }}
->
-  ❧
-</div>
-
-<div
-  className="pointer-events-none absolute right-3 top-3 rotate-90 text-xl leading-none sm:right-4 sm:top-4 sm:text-2xl"
-  style={{ color: templateAccentColor }}
->
-  ❧
-</div>
-
-<div
-  className="pointer-events-none absolute bottom-3 left-3 -rotate-90 text-xl leading-none sm:bottom-4 sm:left-4 sm:text-2xl"
-  style={{ color: templateAccentColor }}
->
-  ❧
-</div>
-
-<div
-  className="pointer-events-none absolute bottom-3 right-3 rotate-180 text-xl leading-none sm:bottom-4 sm:right-4 sm:text-2xl"
-  style={{ color: templateAccentColor }}
->
-  ❧
-</div>
-  {/* H-01 Header */}
-
-  
-  
-<div className="border-b border-[#d8b98b] pb-5 text-center">
-
-  
-{selectedSymbolId !== "none" && (
-  <div className="mb-4 flex justify-center">
-    {selectedSymbol.type === "image" && selectedSymbol.image ? (
-      <img
-        src={selectedSymbol.image}
-        alt={selectedSymbol.name}
-        className="h-14 w-14 object-contain sm:h-16 sm:w-16"
-      />
-    ) : selectedSymbol.type === "text" && selectedSymbol.value ? (
-      <span className="text-4xl text-[#7f1d1d]">
-        {selectedSymbol.value}
-      </span>
-    ) : null}
-  </div>
-)}
-<div className="flex items-center justify-center gap-3">
-  <div
-    className="h-px w-8 sm:w-12"
-    style={{ backgroundColor: templateAccentColor }}
-  />
-
-  <p
-    className="text-xs font-bold uppercase tracking-[0.25em] sm:text-sm"
-    style={{ color: templateAccentColor }}
+    ref={biodataTemplateRef}
+    style={{
+      transform: `scale(${templateZoom / 100})`,
+      transformOrigin: "top center",
+    }}
   >
-    {language === "mr"
-      ? "विवाह परिचय"
-      : language === "hi"
-        ? "विवाह परिचय"
-        : language === "gu"
-          ? "લગ્ન પરિચય"
-          : "Marriage Biodata"}
-  </p>
-
-  <div
-    className="h-px w-8 sm:w-12"
-    style={{ backgroundColor: templateAccentColor }}
-  />
-</div>
-
- {photo && (
-  <div className="mt-4 flex justify-center">
-    <div
-      className="rounded-full border-2 p-1 shadow-sm"
-      style={{ borderColor: templateAccentColor }}
-    >
-      <img
-        src={photo}
-        alt={formData.fullName || "Biodata"}
-        className="h-28 w-28 rounded-full object-cover sm:h-32 sm:w-32"
-      />
-    </div>
-  </div>
-)}
-
-<h2
-  className="mt-3 break-words text-2xl font-bold sm:text-3xl"
-  style={{ color: templateAccentColor }}
->
-  {formData.fullName}
-</h2>
-</div>
-
-
-    {/* Personal Details */}
-    {(formData.dateOfBirth ||
-      formData.birthTime ||
-      formData.birthPlace ||
-      formData.gender ||
-      formData.height ||
-      formData.maritalStatus ||
-      formData.motherTongue ||
-      formData.currentCity ||
-      formData.aboutMe) && (
-      <div
-  className="border-b py-5"
-  style={{ borderColor: templateAccentColor }}
->
-       <div className="mb-4 flex items-center gap-3">
-  <h3
-    className="shrink-0 rounded-r-full px-4 py-1.5 text-sm font-bold text-white sm:text-base"
-    style={{ backgroundColor: templateAccentColor }}
-  >
-    {t.personalDetails}
-  </h3>
-
-  <div
-    className="h-px flex-1"
-    style={{ backgroundColor: templateAccentColor }}
-  />
-</div>
-
-        <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
-          {formData.dateOfBirth && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.dateOfBirth}:</span>{" "}
-              {formData.dateOfBirth}
-            </p>
-          )}
-
-          {formData.birthTime && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.timeOfBirth}:</span>{" "}
-              {formData.birthTime}
-            </p>
-          )}
-
-          {formData.birthPlace && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.placeOfBirth}:</span>{" "}
-              {formData.birthPlace}
-            </p>
-          )}
-
-          {formData.gender && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.gender}:</span>{" "}
-              {formData.gender}
-            </p>
-          )}
-
-          {formData.height && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.height}:</span>{" "}
-              {formData.height}
-            </p>
-          )}
-
-          {formData.maritalStatus && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.maritalStatus}:</span>{" "}
-              {formData.maritalStatus}
-            </p>
-          )}
-
-          {formData.motherTongue && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.motherTongue}:</span>{" "}
-              {formData.motherTongue}
-            </p>
-          )}
-
-          {formData.currentCity && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.currentCity}:</span>{" "}
-              {formData.currentCity}
-            </p>
-          )}
-        </div>
-
-        {formData.aboutMe && (
-          <p className="mt-4 whitespace-pre-line text-sm leading-6"
-style={{ color: templateTextColor }}>
-            <span className="font-semibold">{t.aboutMe}:</span>{" "}
-            {formData.aboutMe}
-          </p>
-        )}
-      </div>
-    )}
-
-    {/* Education & Career */}
-    {(formData.highestQualification ||
-      formData.degreeCourse ||
-      formData.collegeUniversity ||
-      formData.occupation ||
-      formData.companyBusiness ||
-      formData.designation ||
-      formData.workLocation ||
-      formData.annualIncome ||
-      formData.careerDetails) && (
-      <div
-  className="border-b py-5"
-  style={{ borderColor: templateAccentColor }}
->
-       <div className="mb-4 flex items-center gap-3">
-  <h3
-    className="shrink-0 rounded-r-full px-4 py-1.5 text-sm font-bold text-white sm:text-base"
-    style={{ backgroundColor: templateAccentColor }}
-  >
-    {t.educationCareer}
-  </h3>
-
-  <div
-    className="h-px flex-1"
-    style={{ backgroundColor: templateAccentColor }}
-  />
-</div>
-
-        <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
-          {formData.highestQualification && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.highestQualification}:</span>{" "}
-              {formData.highestQualification}
-            </p>
-          )}
-
-          {formData.degreeCourse && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.degreeCourse}:</span>{" "}
-              {formData.degreeCourse}
-            </p>
-          )}
-
-          {formData.collegeUniversity && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.collegeUniversity}:</span>{" "}
-              {formData.collegeUniversity}
-            </p>
-          )}
-
-          {formData.occupation && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.occupation}:</span>{" "}
-              {formData.occupation}
-            </p>
-          )}
-
-          {formData.companyBusiness && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.companyBusiness}:</span>{" "}
-              {formData.companyBusiness}
-            </p>
-          )}
-
-          {formData.designation && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.designation}:</span>{" "}
-              {formData.designation}
-            </p>
-          )}
-
-          {formData.workLocation && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.workLocation}:</span>{" "}
-              {formData.workLocation}
-            </p>
-          )}
-
-          {formData.annualIncome && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.annualIncome}:</span>{" "}
-              {formData.annualIncome}
-            </p>
-          )}
-        </div>
-
-        {formData.careerDetails && (
-          <p className="mt-4 whitespace-pre-line text-sm leading-6"
-style={{ color: templateTextColor }}>
-            <span className="font-semibold">{t.additionalCareerDetails}:</span>{" "}
-            {formData.careerDetails}
-          </p>
-        )}
-      </div>
-    )}
-
-    {/* Family Details */}
-    {(formData.fatherName ||
-      formData.fatherOccupation ||
-      formData.motherName ||
-      formData.motherOccupation ||
-      formData.brothers ||
-      formData.sisters ||
-      formData.familyType ||
-      formData.familyLocation ||
-      formData.familyDetails) && (
-      <div
-  className="border-b py-5"
-  style={{ borderColor: templateAccentColor }}
->
-  <div className="mb-4 flex items-center gap-3">
-    <h3
-      className="shrink-0 rounded-r-full px-4 py-1.5 text-sm font-bold text-white sm:text-base"
-      style={{ backgroundColor: templateAccentColor }}
-    >
-      {t.familyDetails}
-    </h3>
-
-    <div
-      className="h-px flex-1"
-      style={{ backgroundColor: templateAccentColor }}
+    <H01Template
+      mode="preview"
+      labels={t}
+      language={language}
+      formData={formData}
+      photo={photo}
+      selectedSymbolId={selectedSymbolId}
+      selectedSymbol={selectedSymbol}
+      backgroundColor={templateBgColor}
+      textColor={templateTextColor}
+      accentColor={templateAccentColor}
     />
-  </div>
-
-  <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
-          {formData.fatherName && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.fatherName}:</span>{" "}
-              {formData.fatherName}
-            </p>
-          )}
-
-          {formData.fatherOccupation && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.fatherOccupation}:</span>{" "}
-              {formData.fatherOccupation}
-            </p>
-          )}
-
-          {formData.motherName && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.motherName}:</span>{" "}
-              {formData.motherName}
-            </p>
-          )}
-
-          {formData.motherOccupation && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.motherOccupation}:</span>{" "}
-              {formData.motherOccupation}
-            </p>
-          )}
-
-          {formData.brothers && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.brothers}:</span>{" "}
-              {formData.brothers}
-            </p>
-          )}
-
-          {formData.sisters && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.sisters}:</span>{" "}
-              {formData.sisters}
-            </p>
-          )}
-
-          {formData.familyType && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.familyType}:</span>{" "}
-              {formData.familyType}
-            </p>
-          )}
-
-          {formData.familyLocation && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.familyLocation}:</span>{" "}
-              {formData.familyLocation}
-            </p>
-          )}
-        </div>
-
-        {formData.familyDetails && (
-          <p className="mt-4 whitespace-pre-line text-sm leading-6"
-style={{ color: templateTextColor }}>
-            <span className="font-semibold">{t.additionalFamilyDetails}:</span>{" "}
-            {formData.familyDetails}
-          </p>
-        )}
-      </div>
-    )}
-
-    {/* Traditional Details */}
-    {(formData.community ||
-      formData.subCommunity ||
-      formData.gotra ||
-      formData.rashi ||
-      formData.nakshatra ||
-      formData.manglik ||
-      formData.horoscopeAvailable ||
-      formData.traditionalDetails) && (
-      <div
-  className="border-b py-5"
-  style={{ borderColor: templateAccentColor }}
->
-  <div className="mb-4 flex items-center gap-3">
-    <h3
-      className="shrink-0 rounded-r-full px-4 py-1.5 text-sm font-bold text-white sm:text-base"
-      style={{ backgroundColor: templateAccentColor }}
-    >
-      {t.traditionalDetails}
-    </h3>
-
-    <div
-      className="h-px flex-1"
-      style={{ backgroundColor: templateAccentColor }}
-    />
-  </div>
-
-  <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
-          {formData.community && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.communityCaste}:</span>{" "}
-              {formData.community}
-            </p>
-          )}
-
-          {formData.subCommunity && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.subCommunity}:</span>{" "}
-              {formData.subCommunity}
-            </p>
-          )}
-
-          {formData.gotra && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.gotra}:</span>{" "}
-              {formData.gotra}
-            </p>
-          )}
-
-          {formData.rashi && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.rashi}:</span>{" "}
-              {formData.rashi}
-            </p>
-          )}
-
-          {formData.nakshatra && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.nakshatra}:</span>{" "}
-              {formData.nakshatra}
-            </p>
-          )}
-
-          {formData.manglik && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.manglik}:</span>{" "}
-              {formData.manglik}
-            </p>
-          )}
-
-          {formData.horoscopeAvailable && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.horoscopeAvailable}:</span>{" "}
-              {formData.horoscopeAvailable}
-            </p>
-          )}
-        </div>
-
-        {formData.traditionalDetails && (
-          <p className="mt-4 whitespace-pre-line text-sm leading-6"
-style={{ color: templateTextColor }}>
-            <span className="font-semibold">
-              {t.additionalTraditionalDetails}:
-            </span>{" "}
-            {formData.traditionalDetails}
-          </p>
-        )}
-      </div>
-    )}
-
-    {/* Contact Details */}
-    {(formData.contactPerson ||
-      formData.mobileNumber ||
-      formData.alternateNumber ||
-      formData.email ||
-      formData.address ||
-      formData.contactCity ||
-      formData.contactState) && (
-      <div className="py-5">
-  <div className="mb-4 flex items-center gap-3">
-    <h3
-      className="shrink-0 rounded-r-full px-4 py-1.5 text-sm font-bold text-white sm:text-base"
-      style={{ backgroundColor: templateAccentColor }}
-    >
-      {t.contactDetails}
-    </h3>
-
-    <div
-      className="h-px flex-1"
-      style={{ backgroundColor: templateAccentColor }}
-    />
-  </div>
-
-  <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
-          {formData.contactPerson && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.contactPerson}:</span>{" "}
-              {formData.contactPerson}
-            </p>
-          )}
-
-          {formData.mobileNumber && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.mobileNumber}:</span>{" "}
-              {formData.mobileNumber}
-            </p>
-          )}
-
-          {formData.alternateNumber && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.alternateNumber}:</span>{" "}
-              {formData.alternateNumber}
-            </p>
-          )}
-
-          {formData.email && (
-            <p
-  className="break-all text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.emailAddress}:</span>{" "}
-              {formData.email}
-            </p>
-          )}
-
-          {formData.contactCity && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.city}:</span>{" "}
-              {formData.contactCity}
-            </p>
-          )}
-
-          {formData.contactState && (
-            <p
-  className="text-sm"
-  style={{ color: templateTextColor }}
->
-              <span className="font-semibold">{t.state}:</span>{" "}
-              {formData.contactState}
-            </p>
-          )}
-        </div>
-
-        {formData.address && (
-          <p className="mt-4 whitespace-pre-line text-sm leading-6"
-style={{ color: templateTextColor }}>
-            <span className="font-semibold">{t.fullAddress}:</span>{" "}
-            {formData.address}
-          </p>
-        )}
-      </div>
-    )}
   </div>
 )}
 
@@ -3065,7 +2374,18 @@ style={{ color: templateTextColor }}>
       color: templateTextColor,
     }}
   >
-    A4 DOWNLOAD TEST
+    <H01Template
+  mode="a4"
+  labels={t}
+  language={language}
+  formData={formData}
+  photo={photo}
+  selectedSymbolId={selectedSymbolId}
+  selectedSymbol={selectedSymbol}
+  backgroundColor={templateBgColor}
+  textColor={templateTextColor}
+  accentColor={templateAccentColor}
+/>
   </div>
 </div>
 
